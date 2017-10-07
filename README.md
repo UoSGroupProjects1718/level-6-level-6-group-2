@@ -1,5 +1,13 @@
 # Group Project
 
+Level 6 - Group 2
+
+Group Members:
+Courtney Pearson	
+Heather Bishop
+Thomas Wenman
+Lewis Wilden
+
 This is the repository for your group project, keep it neat and well organised with sensible folder structures.
 
 There is **no** need to create archived builds of your project or to keep any old files - everything is automatically archived for you.

@@ -16,7 +16,7 @@ public class Chase : MonoBehaviour {
 	void Update () {
         Vector3 direction = player.position - this.transform.position;
         float angle = Vector3.Angle(direction, this.transform.forward);
-        if (Vector3.Distance(player.position, this.transform.position) < 8 && angle < 30)
+        if (Vector3.Distance(player.position, this.transform.position) < 8 && angle < 50)
         {        
             direction.y = 0;
 
@@ -24,7 +24,7 @@ public class Chase : MonoBehaviour {
                                         Quaternion.LookRotation(direction), 2f * Time.deltaTime);
 
             anim.SetBool("isIdle", false);
-            if(direction.magnitude > 3)
+            if(direction.magnitude > 1.5f)
             {
                 this.transform.Translate(0, 0, 0.05f);
                 anim.SetBool("isWalking", true);

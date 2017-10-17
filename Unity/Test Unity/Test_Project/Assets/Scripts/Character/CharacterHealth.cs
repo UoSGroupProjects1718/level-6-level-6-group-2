@@ -22,9 +22,13 @@ public class CharacterHealth : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+               
+    }
 
-        if (Input.GetKeyDown(KeyCode.X))
-            DealDamage(10);
+    void OnTriggerEnter(Collider other)
+    {
+        DealDamage(10);
+        Debug.Log("Hit");
     }
 
     void DealDamage(float damageValue)

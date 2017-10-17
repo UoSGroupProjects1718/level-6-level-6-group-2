@@ -26,20 +26,19 @@ fn DialogCallback =
 pluginManager.loadClass FBXIMP;
 pluginManager.loadClass FBXEXP;
 
-openLog "C:/Users/Lewis/DOCUME~1/GitHub/level-6-level-6-group-2/Unity/Main Unity/Temp/3dsMax.log" mode:"w"
+openLog "C:/Users/Games/DOCUME~1/GitHub/LEVEL-~2/Unity/MAINUN~1/Temp/3dsMax.log" mode:"w"
 print "Start of log file."; flushLog();
 while true do
 (	
-	if ( fileExists "C:/Users/Lewis/DOCUME~1/GitHub/level-6-level-6-group-2/Unity/Main Unity/Temp/MaxCommandPipe" ) then
+	if ( fileExists "C:/Users/Games/DOCUME~1/GitHub/LEVEL-~2/Unity/MAINUN~1/Temp/MaxCommandPipe" ) then
 	(
 		exportNormals = false;
 		exportTangents = false;
 		bakeAnimations = false;
 		useFileUnits = false;
 	
-		waitpipe = (openFile "C:/Users/Lewis/DOCUME~1/GitHub/level-6-level-6-group-2/Unity/Main Unity/Temp/MaxCommandPipe" mode:"r");
+		waitpipe = (openFile "C:/Users/Games/DOCUME~1/GitHub/LEVEL-~2/Unity/MAINUN~1/Temp/MaxCommandPipe" mode:"r");
 		filename = (readLine waitpipe);
-		fbxFilename = (readline waitpipe);
 		
 		for i = 0 to 3 do
 		(
@@ -64,7 +63,6 @@ while true do
 		if ( (stricmp (getFilenameType filename) ".max") == 0 ) then
 		(
 			filename = (strip filename);
-			fbxFilename = (strip fbxFilename);
 			
 			print "Starting max loading and fbx conversion"; flushLog();
 
@@ -145,7 +143,7 @@ while true do
 					print "Before fbx export"; flushLog();
 					try
 					(
-						exportFile fbxFilename #noprompt;
+						exportFile "C:/Users/Games/DOCUME~1/GitHub/LEVEL-~2/Unity/MAINUN~1/Temp/MaxExportedFBXFile.fbx" #noprompt;
 					)
 					catch
 					(
@@ -154,7 +152,7 @@ while true do
 					print "After fbx export"; flushLog();
 				)
 
-				deleteFile "C:/Users/Lewis/DOCUME~1/GitHub/level-6-level-6-group-2/Unity/Main Unity/Temp/MaxCommandPipe";
+				deleteFile "C:/Users/Games/DOCUME~1/GitHub/LEVEL-~2/Unity/MAINUN~1/Temp/MaxCommandPipe";
 				print "Finished max loading and fbx conversion"; flushLog();
 			) -- with defaultAction
 		)

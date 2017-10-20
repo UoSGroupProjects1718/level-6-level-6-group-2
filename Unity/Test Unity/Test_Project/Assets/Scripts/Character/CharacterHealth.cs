@@ -10,10 +10,12 @@ public class CharacterHealth : MonoBehaviour {
 
     public Slider healthbar;
 
+    
+
     // Use this for initialization
     void Start() {
 
-        MaxHealth = 50f;
+        MaxHealth = 100f;
         CurrentHealth = MaxHealth;
 
         healthbar.value = CalculateHealth();
@@ -22,13 +24,16 @@ public class CharacterHealth : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-               
+ 
     }
 
     void OnTriggerEnter(Collider other)
     {
-        DealDamage(10);
-        Debug.Log("Hit");
+        if (other.gameObject.tag == "Damage")
+        {
+            DealDamage(10);
+            Debug.Log("Hit");
+        }
     }
 
     void DealDamage(float damageValue)

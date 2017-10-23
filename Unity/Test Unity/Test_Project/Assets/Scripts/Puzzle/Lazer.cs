@@ -20,9 +20,10 @@ public class Lazer : MonoBehaviour {
 
         if(Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            if(hit.collider)
+            if(hit.collider.tag == "Mirror")
             {
                 lr.SetPosition(1, new Vector3(0, 0, hit.distance));
+                
 
             }
         }

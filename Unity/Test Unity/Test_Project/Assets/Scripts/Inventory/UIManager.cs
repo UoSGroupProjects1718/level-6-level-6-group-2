@@ -13,10 +13,13 @@ public class UIManager : MonoBehaviour {
     private void Awake()
     {
         inventory = canvas.Find("Inventory");
+        
     }
 
 
     void Start () {
+
+        
 		
 	}
 	

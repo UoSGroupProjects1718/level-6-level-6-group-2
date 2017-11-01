@@ -8,23 +8,26 @@ public class FuelLevel : MonoBehaviour {
     public Slider fuelSlider;
     public int maxFuel;
     public int fuelFallRate;
+    public Light Lantern;
 
 	// Use this for initialization
 	void Start () {
 
         fuelSlider.maxValue = maxFuel;
         fuelSlider.value = maxFuel;
-		
+        Lantern.GetComponent<Light>();
+        Lantern.intensity = 3f;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-        if(fuelSlider.value >=0)
+
+        if (fuelSlider.value >= 0)
         {
             fuelSlider.value -= Time.deltaTime / fuelFallRate;
         }
-        else if(fuelSlider.value <=0)
+        else if (fuelSlider.value <= 0)
         {
             fuelSlider.value = 0;
         }
@@ -32,6 +35,12 @@ public class FuelLevel : MonoBehaviour {
         {
             fuelSlider.value = maxFuel;
         }
-
-	}
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Oil")
+        {
+            fuelSlider.value = maxFuel;
+        }
+    }
 }

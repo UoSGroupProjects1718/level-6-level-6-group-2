@@ -8,6 +8,8 @@ public class Patrol : StateMachineBehaviour {
     int currentWP;
     GameObject NPC;
 
+
+
     private void Awake()
     {
         waypoints = GameObject.FindGameObjectsWithTag("waypoint");
@@ -42,4 +44,6 @@ public class Patrol : StateMachineBehaviour {
     {
 	
 	}
+
+
 }

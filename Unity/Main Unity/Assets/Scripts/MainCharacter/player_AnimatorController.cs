@@ -22,15 +22,8 @@ public class player_AnimatorController : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 	
-		if (Input.GetKeyUp (KeyCode.P)) 
-		{
-			PlayerDie ();
-		}
 
-		if (Input.GetKeyUp (KeyCode.Mouse1)) 
-		{
-			PlayerAttack ();
-		}
+			
 
 		if (Input.GetKeyUp (KeyCode.M)) 
 		{

@@ -23,8 +23,6 @@ namespace Puzzle.Lasers {
 		private Vector3 forwardV = Vector3.forward;
 
 		[SerializeField, HideInInspector]
-		public bool debugM = false;
-		[SerializeField, HideInInspector]
 		public float rayL = 30;
 		[SerializeField, HideInInspector]
 		public bool intersect = true;
@@ -46,8 +44,6 @@ namespace Puzzle.Lasers {
 		public bool hitRefl = true;
 		[SerializeField, HideInInspector]
 		public bool canHit = true;
-		[SerializeField, HideInInspector]
-		public int debugI = -1;
 		[SerializeField, HideInInspector]
 		public GameObject laserObj;
 		[SerializeField, HideInInspector]
@@ -72,18 +68,10 @@ namespace Puzzle.Lasers {
 		public Material[] passMat;
         [SerializeField, HideInInspector]
         public GameObject[] allowedTagObj;
-        [SerializeField, HideInInspector]
-		public bool hitReflMat = true;
-		[SerializeField, HideInInspector]
-		public bool passReflMat = true;
 		[SerializeField, HideInInspector]
 		public bool lasLineREff = true;
 		[SerializeField, HideInInspector]
-		public float powerStart = 1;
-		[SerializeField, HideInInspector]
 		public float reflInc = 1;
-		[SerializeField, HideInInspector]
-		public float chargeInc = 2;
 		[SerializeField, HideInInspector]
 		public float[] reflMatInc;
 		[SerializeField, HideInInspector]
@@ -98,15 +86,13 @@ namespace Puzzle.Lasers {
         public float[] pasTagInc;
         [SerializeField, HideInInspector]
         public int hitScanMode = 0;
-        [SerializeField, HideInInspector]
-		public float powerCap = 0;
 		[SerializeField, HideInInspector]
 		public float lrWidth = 0.2f;
 		[SerializeField, HideInInspector]
 		public float desSpObj = 5;
 		[SerializeField, HideInInspector]
 		public bool disalbePartObj = true;
-
+    
 		[SerializeField, HideInInspector]
 		public int infLM = 0;
 		[SerializeField, HideInInspector]
@@ -119,42 +105,23 @@ namespace Puzzle.Lasers {
 		private Dictionary<GameObject, lFxObj> fxObjsD = new Dictionary<GameObject, lFxObj>();
 		private List<GameObject> delFlag = new List<GameObject>();
 
-		private bool intersectS = false;
-		private bool reflectS = false;
-		private bool updateLrPosS = false;
-		private bool endCapBS = false;
-		private bool startCapBS = false;
-		private bool hitObjBS = false;
-		private bool hitReflS = false;
-		private bool reflectStCapS = true;
-		private bool reflectLRemainderS = true;
-		private bool hitReflMatS = true;
-		private bool passReflMatS = true;
-
-		private bool hasChanged = false;
-
 		private RaycastHit hit;
-		private RaycastHit2D[] hit2D;
 		private Vector3 fwd2;
 		private laser[] lSources;
 		private List<laser> lSources2 = new List<laser>();
 		private List<laser> lSources3 = new List<laser>();
 		private laserStObj[] laserSt = new laserStObj[0];
 		private Vector3 overRideV3;
-		private int foundInt = -1;
 		private LineRenderer lrO;
 		private Vector3 t1;
 		private Vector3 t2;
 		private bool para1;
-		private float hitDist = 0;
 		private bool exclGO;
 		private Vector3 drawGiz;
 		private bool isHit;
 
 		private GameObject intersectGO;
-		private int powerLvl = 1;
 		private float tDist;
-		private float tDist2;
 
 		[SerializeField, HideInInspector]
 		public bool enablePool;
@@ -173,14 +140,11 @@ namespace Puzzle.Lasers {
 		private laserStObj l3 = null;
 		private List<laserStObj> lStack = new List<laserStObj>();
 		private int lC;
-		private bool canGo;
 		private bool rayPass;
 		private int rayPassI;
 		private bool reflMatT;
-		private Vector3 fwd4;
 		private bool goMat;
 		private Vector3 tv3;
-		private float fl = 0;
 		private bool bar = false;
 		private destroyFX tDfx;
 
@@ -199,10 +163,6 @@ namespace Puzzle.Lasers {
 		float dot;
 
 		Quaternion q1;
-		MeshCollider meshT = null;
-		MeshRenderer rendF = null;
-		SpriteRenderer rendS = null;
-		Material[] tMat;
 
 		int maxI = 0;
 
@@ -234,7 +194,6 @@ namespace Puzzle.Lasers {
 						{
 							forwardV = Vector3.forward;
 						}
-						hasChanged = false;
 						updateLSources();
 						loadAll();
 						scanHits();
@@ -245,20 +204,15 @@ namespace Puzzle.Lasers {
 							onDel = onSys;
 						}
                     }
-				} else {
-					Debug.Log("Laser System: Laser objct requires laser script, system aborting");
-				}
-			} else {
-				Debug.Log("Laser System: No laser object assigned, system aborting");
-			}
+				} 
 		}
+            }
 
 		private void Update() {
 			if (laserObj != null) {
 				if (laserObj.GetComponent<laser>()) {
 					if (onSys) {
 						delFlagged();
-						hasChanged = false;
 						updateLineR();
 						if (Time.time > nextScT) {
 							checkFxObjs();
@@ -277,7 +231,6 @@ namespace Puzzle.Lasers {
 			}
 
 		}
-
 		void delFlagged() {
 			for (i = 0; i < delFlag.Count; i++) {
 				if (delFlag[i]) {
@@ -360,7 +313,6 @@ namespace Puzzle.Lasers {
 			public float hitDist = 0;
 			public int shrtA = -1;
 			public Vector3[] intSctA;
-			//public SortedList<float, laserStObj> hitOrder = new SortedList<float, laserStObj>();
 			public laserStObj[] hitOrder;
 			public float[] hitInts;
 
@@ -377,7 +329,6 @@ namespace Puzzle.Lasers {
 			public LayerMask hitLayerMe;
 			public bool hitReflMatMe;
 			public Material[] allowedMatsMe;
-			public bool passReflMatMe;
 			public Material[] passedMatsMe;
             public string[] reflTagMe;
             public float[] reflTagIncMe;
@@ -387,7 +338,6 @@ namespace Puzzle.Lasers {
             public int hitScanModeMe = 0;
             public bool canRefl;
 			public bool lasLineREffMe = true;
-			public float powerStartMe = 1;
 			public float reflIncMe = 2;
 			public float chargeIncMe = 2;
 			public float[] reflMatIncMeA;
@@ -395,11 +345,9 @@ namespace Puzzle.Lasers {
 			public float reflMatIncMe = 1f;
 			public float[] pasMatIncMeA;
 			public float pasMatIncMe = 1f;
-			public float powerCapMe = 0;
 			public float lrWidthMe = 0.2f;
 			public bool blockTypeMe = false;
 			public float blockThresholdMe = -1;
-			public bool chargeTypeMe = false;
 			public bool on = true;
 
 			public GameObject hitGOM = null;
@@ -466,61 +414,45 @@ namespace Puzzle.Lasers {
 				hitLayerMe = 0;
 				hitReflMatMe = false;
 				allowedMatsMe = null;
-				passReflMatMe = false;
 				passedMatsMe = null;
 				canRefl = false;
 				lasLineREffMe = true;
-				powerStartMe = 1;
 				reflIncMe = 2;
-				chargeIncMe = 2;
 				reflMatIncMeA = null;
 				allowedMatsObjMe = null;
 				reflMatIncMe = 1f;
 				pasMatIncMeA = null;
 				pasMatIncMe = 1f;
-				powerCapMe = 0;
 				lrWidthMe = 0.2f;
 				blockTypeMe = false;
 				blockThresholdMe = -1;
-				chargeTypeMe = false;
 				on = true;
 
 				hitGOM = null;
 				hitMat = null;
 
                 hitTag = "";
-
 				laserObj = null;
 				intSctObj = null;
 				hitObj = null;
 				startCapObj = null;
 				endCapObj = null;
-
 				hasHitR = false;
 				hasInt = false;
 				lasSt = null;
-
 				infL = false;
 				isChild = false;
 				groupId = "";
-
 				lOS.Clear();
-
 				firstRun = false;
-
-				curPower = 1;
-
-				charged = 0;
 				inCol = false;
 			}
 
-			public void init(float rayL, bool intersectMeV, bool reflectMeV, bool hitReflectMeV, bool hitMeV, bool reflRemV, LayerMask hitLayerMeV, bool hitReflMatMeV, Material[] allowedMatsMeV, bool passReflMatMeV, Material[] passedMatsMeV, bool lasLineREffMeV, float powerStartMeV, float reflIncMeV, float chargeIncMeV, float[] reflMatIncMeV, float[] pasMatIncMeV, float powerCapMeV, float lrWidthMeV, GameObject gO,
+			public void init(float rayL, bool intersectMeV, bool reflectMeV, bool hitReflectMeV, bool hitMeV, bool reflRemV, LayerMask hitLayerMeV, bool lasLineREffMeV, float reflIncMeV, float lrWidthMeV, GameObject gO,
 				GameObject laserObjMeV, GameObject intSctObjMeV, GameObject hitObjMeV, GameObject startCapObjMeV,
 				GameObject endCapObjMeV, GameObject[] allowedMatsObjMeV,
                 string[] reflTagMeV,
                 float[] reflTagIncMeV,
-                //string[] pasTagMeV,
-                //float[] pasTagIncMeV,
                 GameObject[] allowedTagObjMeV,
                 int hitScanModeMeV) {
 				gameObjectSt = gO;
@@ -532,37 +464,22 @@ namespace Puzzle.Lasers {
 				hitMe = hitMeV;
 				reflLenRemainder = reflRemV;
 				hitLayerMe = hitLayerMeV;
-				hitReflMatMe = hitReflMatMeV;
-				allowedMatsMe = allowedMatsMeV;
-				passReflMatMe = passReflMatMeV;
-				passedMatsMe = passedMatsMeV;
+
 				lasLineREffMe = lasLineREffMeV;
 				reflIncMe = reflIncMeV;
-				chargeIncMe = chargeIncMeV;
-				reflMatIncMeA = reflMatIncMeV;
-				pasMatIncMeA = pasMatIncMeV;
 				lrWidthMe = lrWidthMeV;
-				powerCapMe = powerCapMeV;
 				laserObj = laserObjMeV;
 				intSctObj = intSctObjMeV;
 				hitObj = hitObjMeV;
 				startCapObj = startCapObjMeV;
 				endCapObj = endCapObjMeV;
-				allowedMatsObjMe = allowedMatsObjMeV;
                 reflTagMe = reflTagMeV;
                 reflTagIncMe = reflTagIncMeV;
                 allowedTagObj = allowedTagObjMeV;
-                //pasTagMe = pasTagMeV;
-                //pasTagIncMe = pasTagIncMeV;
                 hitScanModeMe = hitScanModeMeV;
 				if (gameObjectSt != null) {
 					if (scriptL = gameObjectSt.GetComponent<laser>()) {
 						isChild = scriptL.isChild;
-						if (!isChild) {
-							powerStartMe = powerStartMeV;
-						} else {
-							powerStartMe = scriptL.powerStart;
-						}
 						if (!scriptL.useGlobal) {
                             if (scriptL.localLength) {
 								length = scriptL.length;
@@ -584,36 +501,12 @@ namespace Puzzle.Lasers {
 							}
 							if (scriptL.localHitMask) {
 								hitLayerMe = scriptL.hitLayerM;
-							}
-							if (scriptL.localHitReflectMat) {
-                                hitScanModeMe = scriptL.hitScanMode;
-                                hitReflMatMe = scriptL.hitRefMatE;
-								allowedMatsObjMe = scriptL.reflMatObj;
-								allowedMatsMe = scriptL.reflMatsE;
-                                reflTagMe = scriptL.reflTag;
-                                reflTagIncMe = scriptL.reflTagInc;
-                                allowedTagObj = scriptL.allowedTagObj;
-                            }
-							if (scriptL.localPassthroughMat) {
-								passReflMatMe = scriptL.passRefMatE;
-								passedMatsMe = scriptL.passedMatsE;
-							}
+							}						
 							if (scriptL.localLineRenderer) {
 								lasLineREffMe = scriptL.lasLineREff;
 							}
-							if (scriptL.localStartPower) {
-								powerStartMe = scriptL.powerStart;
-							}
 							if (scriptL.localReflectionPowerInc) {
 								reflIncMe = scriptL.reflInc;
-							}
-							if (scriptL.localChargePowerInc) {
-								chargeIncMe = scriptL.chargeInc;
-							}
-							reflMatIncMeA = scriptL.reflMatInc;
-							pasMatIncMeA = scriptL.pasMatInc;
-							if (scriptL.localPowerCap) {
-								powerCapMe = scriptL.powerCap;
 							}
 							if (scriptL.localLineRendererWidth) {
 								lrWidthMe = scriptL.lrWidth;
@@ -634,17 +527,11 @@ namespace Puzzle.Lasers {
 								endCapObj = scriptL.endCapObj;
 							}
 						}
-						curPower = powerStartMe;
-						if (powerCapMe > 0) {
-							if (curPower > powerCapMe) {
-								curPower = powerCapMe;
-							}
-						}
+
 						firstRun = scriptL.firstRun;
 						on = scriptL.onM;
 						blockTypeMe = scriptL.blockType;
 						blockThresholdMe = scriptL.blockThreshold;
-						chargeTypeMe = scriptL.chargeType;
 						groupId = scriptL.groupId;
 						if (!isChild) {
 							groupId = gameObjectSt.GetInstanceID().ToString();
@@ -717,70 +604,8 @@ namespace Puzzle.Lasers {
 				return 1;
 			}
 		}
-
-		public bool ClosestPointsOnTwoLines(out Vector3 closestPointLine1, out Vector3 closestPointLine2, Vector3 linePoint1, Vector3 lineVec1, Vector3 linePoint2, Vector3 lineVec2, laser go2, laser go1, float len1, float len2) {
-			closestPointLine1 = Vector3.zero;
-			closestPointLine2 = Vector3.zero;
-
-			a = Vector3.Dot(lineVec1, lineVec1);
-			b = Vector3.Dot(lineVec1, lineVec2);
-			e = Vector3.Dot(lineVec2, lineVec2);
-
-			d = a * e - b * b;
-
-			//lines are not parallel
-			if (d != 0.0f) {
-
-				r = linePoint1 - linePoint2;
-				c = Vector3.Dot(lineVec1, r);
-				f = Vector3.Dot(lineVec2, r);
-
-				s = (b * f - c * e) / d;
-				t = (a * f - c * b) / d;
-
-				closestPointLine1 = linePoint1 + lineVec1 * s;
-				closestPointLine2 = linePoint2 + lineVec2 * t;
-				tv3 = go2.transform.TransformPoint(forwardV * len2);
-				if (PointOnWhichSideOfLineSegment(go1.transform.position, go1.transform.TransformPoint(forwardV * len1), closestPointLine1) == 0 && PointOnWhichSideOfLineSegment(linePoint2, tv3, closestPointLine2) == 0) {
-					return true;
-				}
-				return false;
-			} else {
-				return false;
-			}
-		}
-
-		public bool LineLineIntersection(out Vector3 intersection, Vector3 linePoint1, Vector3 lineVec1, Vector3 linePoint2, Vector3 lineVec2, Vector3 transformP1, Vector3 transformP2) {
-
-			linePoint1.z = 0;
-			linePoint2.z = 0;
-			lineVec1.z = 0;
-			lineVec2.z = 0;
-
-			Vector3 lineVec3 = linePoint2 - linePoint1;
-			Vector3 crossVec1and2 = Vector3.Cross(lineVec1, lineVec2);
-			Vector3 crossVec3and2 = Vector3.Cross(lineVec3, lineVec2);
-
-			float planarFactor = Vector3.Dot(lineVec3, crossVec1and2);
-
-			//is coplanar, and not parrallel
-			if (Mathf.Abs(planarFactor) < 0.0001f && crossVec1and2.sqrMagnitude > 0.0001f) {
-				float s = Vector3.Dot(crossVec3and2, crossVec1and2) / crossVec1and2.sqrMagnitude;
-				intersection = linePoint1 + (lineVec1 * s);
-				if (PointOnWhichSideOfLineSegment(linePoint1, transformP1, intersection) == 0 && PointOnWhichSideOfLineSegment(linePoint2, transformP2, intersection) == 0) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				intersection = Vector3.zero;
-				return false;
-			}
-		}
-
-		void loadAll() {
+	void loadAll() {
 			for (i = 0; i < maxI; i++) {
-				fwd4 = lSources2[i].transform.TransformPoint(forwardV * hit2DDistance);
 				//create all classes and variables
 				tL1 = lSources2[i];
 				if (laserSt[i] == null) {
@@ -788,12 +613,11 @@ namespace Puzzle.Lasers {
 				} else {
 					laserSt[i].reset();
 				}
-				laserSt[i].init(rayL, intersect, reflect, hitRefl, canHit, reflectLRemainder, hitLayerM, hitReflMat, allowedMat, passReflMat, passMat, lasLineREff, powerStart, reflInc, chargeInc, reflMatInc, pasMatInc, powerCap, lrWidth, tL1.gameObject,
+				laserSt[i].init(rayL, intersect, reflect, hitRefl, canHit, reflectLRemainder, hitLayerM, lasLineREff, reflInc, lrWidth, tL1.gameObject,
 				laserObj, intSctObj, hitObj, startCapObj, endCapObj, allowedMatObj,
                 reflTag, reflTagInc, allowedTagObj, hitScanMode);
 			}
 		}
-     
         void doHitT(string tag) {
             reflMatT = false;
             for (i2 = 0; i2 < l1.reflTagMe.Length; i2++) {
@@ -807,10 +631,7 @@ namespace Puzzle.Lasers {
             }
         }
         void scanHits() {
-			//start scan of all laser objects, if rayhit
 			for (i = 0; i < maxI; i++) {
-				fwd4 = lSources2[i].transform.TransformPoint(forwardV * hit2DDistance);
-				//create all classes and variables
 				tL1 = lSources2[i];
 				l1 = laserSt[i];
 				l1.myInt = i;
@@ -828,47 +649,27 @@ namespace Puzzle.Lasers {
                     l1.hitDist = l1.sLength;
                     rayPass = true;
                     rayPassI = 0;
-                    tMat = new Material[0];
-                    //if able to raycast
                     if (l1.hitMe) {
-                        //do raycast 3D
                         if (!mode2D) {
                             if (Physics.Linecast(lSources2[i].transform.position, fwd2, out hit, l1.hitLayerMe)) {
                                 if (l1.hitScanModeMe == 1) {
                                     while (rayPass == true) {
-                                        //change lincecast if not on first scan
                                         if (rayPassI > 0) {
                                             Physics.Linecast(hit.point, fwd2, out hit, l1.hitLayerMe);
                                         }
                                         reflMatT = false;
-                                        //turn off the loop
                                         rayPass = false;
-                                        //check if hit
-                                        if (hit.collider) {
-                                            //check if material properties are true for laser
-                                            if ((l1.hitReflMatMe && l1.hitReflectMe) || l1.passReflMatMe) {
-
-                                            }
-
-                                            if (l1.hitReflectMe && !l1.hitReflMatMe) {
-                                                reflMatT = true;
-                                            }
-
-                                            //if no passthrough (and hit), log hit 3D
+                                        if (hit.collider) {                                       
                                             if (!rayPass) {
                                                 l1.hitA = hit.point;
                                                 l1.hitNorm = hit.normal;
                                                 l1.hitDist = Vector3.Distance(tL1.transform.position, hit.point);
                                                 l1.hitGO = hit.collider.gameObject;
-                                                if (l1.hitReflectMe) {
-                                                    l1.canRefl = reflMatT;
-                                                }
                                             }
                                             rayPassI++;
                                         }
                                     }
-                                } else {
-                                    reflMatT = false;
+                                } else {                                 
                                     doHitT(hit.collider.tag);
                                     l1.hitA = hit.point;
                                     l1.hitNorm = hit.normal;
@@ -879,132 +680,39 @@ namespace Puzzle.Lasers {
                                     }
                                 }
                             }
-                        } else {
-                            hit2D = Physics2D.LinecastAll(fwd4, fwd2, l1.hitLayerMe);
-                            if (hit2D.Length > 0) {
-                                reflMatT = false;
-                                //turn off the loop
-                                goMat = false;
-                                //check if hit
-                                if (hit2D[0].collider) {
-                                    if (l1.hitReflMatMe && l1.hitReflectMe) {
-                                        if (l1.hitScanModeMe == 1) {
-                                        
-
-                                            doHitT(hit2D[0].collider.tag);
-
-                                        }
-                                    } else {
-                                        reflMatT = false;
-                                    }
-                                    //if no passthrough (and hit), log hit 3D
-                                    q1 = Quaternion.AngleAxis(180, Vector3.forward);
-                                    if (!hit2D[0].collider.OverlapPoint(fwd4)) {
-                                        l1.hitA = hit2D[0].point;
-                                        l1.hitNorm = hit2D[0].normal;
-                                        l1.hitDist = Vector2.Distance(tL1.transform.position, hit2D[0].point);
-                                        l1.hitGO = hit2D[0].collider.gameObject;
-                                        if (l1.hitReflectMe) {
-                                            l1.canRefl = reflMatT;
-                                        }
-                                    } else {
-                                        l1.inCol = true;
-                                    }
-                                }
-                            } else {
-                                l1.canRefl = l1.hitReflectMe;
+                        
                             }
                         }
                     }
                 }
 			}
-		}
-
 		void scanLines() {
-			//scann all line intersections and log
-			//start with base laser
 			for (i = 0; i < maxI; i++) {
 				l1 = laserSt[i];
 				tL1 = lSources2[i];
 				fwd2 = tL1.transform.TransformPoint(forwardV * l1.sLength);
-				tDist2 = l1.hitDist;
-				//cross reference with other lasers
 				for (i2 = 0; i2 < maxI; i2++) {
-					canGo = true;
-					//if both on, continue
 					l1.intSctA[i2] = Vector3.zero;
 					l1.hitInts[i2] = l1.sLength;
 					l1.hitOrder[i2] = laserSt[i2];
 					if (l1.on && !l1.inCol && laserSt[i2].on && l1.scriptL.curPower > 0 && laserSt[i2].scriptL.curPower > 0) {
 						tL2 = laserSt[i2].gameObjectSt.GetComponent<laser>();
-						//if not parent or child, continue
 						if (tL1.parent1 != laserSt[i2].gameObjectSt && tL1.parent2 != laserSt[i2].gameObjectSt) {
 							if (tL2.parent1 != tL1.gameObjectSt && tL2.parent2 != tL1.gameObjectSt) {
 								bar = false;
 								if (lSources2[i2].gameObject != null && l1 != null) {
 									if (infProt) {
 										if (l1.scriptL.groupId.Contains(laserSt[i2].scriptL.groupId) || laserSt[i2].scriptL.groupId.Contains(l1.scriptL.groupId)) {
-											canGo = false;
 										}
 									}
-									if (canGo) {
-										//check if not parent or child
-										l1.intSctA[i2] = fwd2;
-										//check not scanning self
-										if (lSources2[i2].gameObject != tL1.gameObject) {
-											//get closest point between lines, check intersecting via minIntDist
-											if (!mode2D) {
-												para1 = ClosestPointsOnTwoLines(out t1, out t2, tL1.transform.position, tL1.transform.TransformDirection(forwardV), lSources2[i2].transform.position, lSources2[i2].transform.TransformDirection(forwardV), lSources2[i2], tL1, l1.hitDist, laserSt[i2].hitDist);
-												fl = Vector3.Distance(t1, t2);
-											} else {
-												para1 = LineLineIntersection(out t1, tL1.transform.position, tL1.transform.TransformDirection(forwardV),
-													lSources2[i2].transform.position, lSources2[i2].transform.TransformDirection(forwardV),
-													tL1.transform.TransformPoint(forwardV * l1.hitDist),
-													lSources2[i2].transform.TransformPoint(forwardV * laserSt[i2].hitDist)
-													);
-												t2 = t1;
-												fl = 0;
-											}
-											if (para1 && fl < minIntDist) {
-												if (!mode2D) {
-													tv3 = t2 + (t1 - t2) / 2;
-												} else {
-													tv3 = t1;
-												}
-												tDist = Vector3.Distance(tL1.transform.position, tv3);
-												l1.hitInts[i2] = tDist;
-												//log if able to charge
-												if (l1.chargeTypeMe && (!l1.intersectMe || l1.blockTypeMe)) {
-													laserSt[i2].charged++;
-												}
-												//check if can intersect, log if true
-												if (l1.intersectMe && laserSt[i2].intersectMe) {
-													if (tDist < tDist2) {
-														bar = true;
-													}
-												}
-												if (bar) {
-													tDist2 = tDist;
-													l1.shrtA = i2;
-													l1.intPos = tv3;
-													l1.intGoI = i2;
-												}
-												//log intersection
-												l1.intSctA[i2] = tv3;
-											}
-										}
-									}
-								}
+                                }
 							}
 						}
 					}
-					//if (!l1.hitOrder.ContainsKey(l1.hitInts[i2])) {
-					//l1.hitOrder.Add(l1.hitInts[i2], laserSt[i2]);
-					//}
 				}
 			}
 		}
-
+										
 		void sortAll() {
 			for (i = 0; i < maxI; i++) {
 				l1 = laserSt[i];
@@ -1015,8 +723,6 @@ namespace Puzzle.Lasers {
 			lSrt.Clear();
 			lSrt.AddRange(laserSt);
 		}
-
-
 		void updateLineR() {
 			l1 = null;
 			l2 = null;
@@ -1068,7 +774,6 @@ namespace Puzzle.Lasers {
                 }
 			}
 		}
-
 		void checkFxObjs() {
 			for (i = 0; i < fxObjs.Count; i++) {
 				bar = false;
@@ -1101,7 +806,6 @@ namespace Puzzle.Lasers {
 			}
 			fxObjsGo = fxObjsGo2;
 		}
-
 		public void reset() {
 			for (i = 0; i < fxObjs.Count; i++) {
 				resetLfxobj(fxObjs[i]);
@@ -1110,8 +814,6 @@ namespace Puzzle.Lasers {
 			updateLSources();
 			checkFxObjs();
 		}
-
-
 		void findShrt() {
 			if (laserSt.Length > 0) {
 				lStack.AddRange(laserSt);
@@ -1120,7 +822,6 @@ namespace Puzzle.Lasers {
 				lC = 0;
 				i = 0;
 				i2 = 0;
-
 				for (i = 0; i < lStack.Count; i++) {
 					l1 = lStack[i];
 					if (!l1.inCol) {
@@ -1131,12 +832,9 @@ namespace Puzzle.Lasers {
 					}
 					l1.intGoI = -1;
 					l1.lOS.AddRange(l1.hitOrder);
-					//for (i2 = 0; i2 < l1.hitOrder.Values.Count; i2++) {
-					//l1.lOS.Add(l1.hitOrder.Values[i2]);
-					//}
-				}
 
-				while (lStack.Count > 0 && lStack.Count * lStack.Count > lC) {
+				}
+			while (lStack.Count > 0 && lStack.Count * lStack.Count > lC) {
 					l1 = lStack[0];
 					lStack.Remove(l1);
 					if (l1.on) {
@@ -1170,12 +868,6 @@ namespace Puzzle.Lasers {
 										l2.hasInt = true;
 										lStack.Remove(l2);
 										lC = 0;
-										if (l1.chargeTypeMe) {
-											l2.charged++;
-										}
-										if (l2.chargeTypeMe) {
-											l1.charged++;
-										}
 									}
 								} else if (l2.blockTypeMe) {
 									l1.intGoI = l2.myInt;
@@ -1183,12 +875,6 @@ namespace Puzzle.Lasers {
 									l1.lasSt = l2;
 									l1.hasInt = true;
 									lC = 0;
-									if (l2.chargeTypeMe) {
-										l1.charged++;
-									}
-									if (l1.chargeTypeMe) {
-										l2.charged++;
-									}
 								}
 								if (!l1.hasInt) {
 									lC++;
@@ -1206,7 +892,6 @@ namespace Puzzle.Lasers {
 						l1.intGoI = -1;
 					}
 				}
-
 				if (infLM != 3) {
 					for (i = 0; i < lStack.Count; i++) {
 						l1 = lStack[i];
@@ -1243,13 +928,6 @@ namespace Puzzle.Lasers {
 							}
 							if (l1.lOS.Count > 0) {
 								l2 = l1.lOS[i2];
-								if (l2.intersectMe) {
-									if (l1.chargeTypeMe) {
-										l2.charged++;
-									}
-									if (l2.chargeTypeMe) {
-										l1.charged++;
-									}
 									if (l1.intSctA[l2.myInt] != Vector3.zero) {
 										l1.intGoI = l2.myInt;
 										l1.intPos = l1.intSctA[l1.intGoI];
@@ -1263,10 +941,9 @@ namespace Puzzle.Lasers {
 						}
 					}
 				}
-			}
+			
 			lStack.Clear();
 		}
-
 		void setLR(Vector3 lrPos, GameObject currentGO) {
 			lrO = currentGO.GetComponent<LineRenderer>();
 			lrO.enabled = true;
@@ -1285,16 +962,6 @@ namespace Puzzle.Lasers {
 #endif
 			}
 		}
-
-		void setCharge(laserStObj obj1) {
-			obj1.curPower = obj1.curPower * (obj1.charged * obj1.chargeIncMe);
-			if (obj1.powerCapMe > 0) {
-				if (obj1.curPower > obj1.powerCapMe) {
-					obj1.curPower = obj1.powerCapMe;
-				}
-			}
-		}
-
 		lFxObj addlFxObj(bool infL, laserStObj obj1) {
 			lFxObj tFO = new lFxObj();
 			fxObjs.Add(tFO);
@@ -1304,7 +971,6 @@ namespace Puzzle.Lasers {
 			tFO.lS = obj1;
 			return tFO;
 		}
-
 		public lFxObj getlFxObj(GameObject l1) {
 			if (l1 != null) {
 				if (lasObjsD.ContainsKey(l1)) {
@@ -1313,7 +979,6 @@ namespace Puzzle.Lasers {
 			}
 			return null;
 		}
-
 		public void removelFxObj(lFxObj tFO) {
 			if (tFO != null) {
 				destroyThis(tFO.go, 0);
@@ -1335,7 +1000,6 @@ namespace Puzzle.Lasers {
 				lasObjsD.Remove(tFO.go);
 			}
 		}
-
 		void removelFxObjCh(lFxObj tFO) {
 			if (tFO != null) {
 				//Destroy(tFO.go);
@@ -1357,7 +1021,6 @@ namespace Puzzle.Lasers {
 				lasObjsD.Remove(tFO.go);
 			}
 		}
-
 		void resetLfxobj(lFxObj tFO) {
 			if (tFO != null) {
 				destroyThis(tFO.go, 0);
@@ -1378,7 +1041,6 @@ namespace Puzzle.Lasers {
 				lasObjsD.Remove(tFO.go);
 			}
 		}
-
 		GameObject createGO(GameObject go, Vector3 pos, Quaternion rot, lFxObj tFO) {
 			GameObject tGo;
 			if (enablePool) {
@@ -1396,7 +1058,6 @@ namespace Puzzle.Lasers {
 			}
 			return tGo;
 		}
-
 		void createIntSect(laserStObj obj1, laserStObj obj2) {
 			bool canGo = true;
 
@@ -1426,9 +1087,7 @@ namespace Puzzle.Lasers {
 					tFO2.inf = false;
 				}
 			}
-
 			laser tLas;
-
 			if (tFO == null) {
 				tFO = addlFxObj(false, obj1);
 			}
@@ -1455,7 +1114,6 @@ namespace Puzzle.Lasers {
 					}
 				}
 			}
-
 			if (!tFO.inf && obj1.infL) {
 				tFO.inf = true;
 				if (tFO.cL != null || tFO.hic != null) {
@@ -1467,7 +1125,6 @@ namespace Puzzle.Lasers {
 			} else {
 				tFO.inf = false;
 			}
-
 			if (obj1.on || !obj1.firstRun) {
 				if (obj1.isChild && (!obj1.scriptL.parent1 || !obj1.scriptL.parent2)) {
 					canGo = false;
@@ -1640,7 +1297,6 @@ namespace Puzzle.Lasers {
 							if (obj1.hitNorm != Vector3.zero) {
 								normV = Quaternion.LookRotation(obj1.hitNorm);
 							}
-
 							if (obj1.scriptL.hitMat != obj1.hitMat) {
 								if (tFO.hic != null) {
 									destroyThis(tFO.hic, desSpObj);
@@ -1652,7 +1308,6 @@ namespace Puzzle.Lasers {
 								}
 								obj1.scriptL.hitMat = obj1.hitMat;
                             }
-
                             if (obj1.scriptL.hitTag != obj1.hitTag) {
                                 if (tFO.hic != null) {
                                     destroyThis(tFO.hic, desSpObj);
@@ -1664,7 +1319,6 @@ namespace Puzzle.Lasers {
                                 }
                                 obj1.scriptL.hitTag = obj1.hitTag;
                             }
-
                             if (tFO.lFX2 != null) {
 								if (tFO.hic != null) {
 									destroyThis(tFO.hic, desSpObj);
@@ -1681,7 +1335,6 @@ namespace Puzzle.Lasers {
 								tFO.lFX2.lFX2 = null;
 								tFO.lFX2 = null;
 							}
-
 							if (tFO.hic == null && hitObjB) {
 								tFO.hic = createGO(obj1.hitGOM, obj1.hitA + (obj1.hitNorm * 0.01f), normV, tFO) as GameObject;
 							} else if (tFO.hic != null) {
@@ -1747,7 +1400,6 @@ namespace Puzzle.Lasers {
 			}
 
 		}
-
 		private void destroyThis(GameObject goDest, float time) {
 			if (goDest) {
 				if (disalbePartObj) {

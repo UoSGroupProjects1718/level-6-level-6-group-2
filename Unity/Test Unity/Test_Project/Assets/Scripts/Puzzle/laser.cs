@@ -14,7 +14,6 @@ namespace Puzzle.Lasers {
 		[SerializeField, HideInInspector]
 		public string groupId = "";
         
-		//public bool debugMe = true;
 
 		[SerializeField, HideInInspector]
 		public bool onM = true;
@@ -25,7 +24,7 @@ namespace Puzzle.Lasers {
 		[SerializeField, HideInInspector]
 		public bool useGlobal = true;
 		[SerializeField, HideInInspector]
-		public float length = 30;
+		public float length = 50;
 		[SerializeField, HideInInspector]
 		public bool intersectE = true;
 		[SerializeField, HideInInspector]
@@ -65,20 +64,7 @@ namespace Puzzle.Lasers {
 		[SerializeField, HideInInspector]
 		public float reflInc = 2;
 		[SerializeField, HideInInspector]
-		public float chargeInc = 2;
-		[Header("Reflection materials power increase")]
-		[SerializeField, HideInInspector]
-		[Tooltip("Multiply the reflected laser by this number, a reflected laser starting at 2 with this value at 3 will finish at 6. Each array index corresponds to the relevant index in the reflected material array (local)")]
-		public float[] reflMatInc;
-		[Header("Passthrough materials power increase")]
-		[SerializeField, HideInInspector]
-		[Tooltip("Multiply the passthrough laser by this number, a passthrough laser starting at 2 with this value at 3 will finish at 6. Each array index corresponds to the relevant index in the passthrough material array (local)")]
-		public float[] pasMatInc;
-		[SerializeField, HideInInspector]
-		public float powerCap = 0;
-		[SerializeField, HideInInspector]
 		public float lrWidth = 0.2f;
-
 		[SerializeField, HideInInspector]
 		public GameObject laserObj;
 		[SerializeField, HideInInspector]
@@ -146,8 +132,7 @@ namespace Puzzle.Lasers {
 		public bool blockType = false;
 		[SerializeField, HideInInspector]
 		public float blockThreshold = -1;
-		[SerializeField, HideInInspector]
-		public bool chargeType = false;
+
 
 		[SerializeField, HideInInspector]
 		public bool useRem = false;

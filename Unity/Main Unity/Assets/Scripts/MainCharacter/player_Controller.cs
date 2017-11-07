@@ -6,8 +6,8 @@ public class player_Controller : MonoBehaviour
 {
 	public static CharacterController characterController; // getting character controller reference
 	public static player_Controller Instance; // naming reference to this script in a reference to itself.
-	public FuelLevel FuelLevel;
-	public EnemyDeath enemyDeath;
+	public static FuelLevel FuelLevel;
+	public static EnemyDeath enemyDeath;
 
 	//list of enemys can attack
 
@@ -87,13 +87,14 @@ public class player_Controller : MonoBehaviour
 
 	public void Attack()
 	{
-		FuelLevel.fuelSlider.value -= 5;
-		Debug.Log (FuelLevel.fuelSlider.value);
 		foreach (GameObject enemy in enemyObjs) 
 		{
 			enemy.GetComponent<EnemyDeath> ().ReceiveHit ();
 
 		}
+		FuelLevel.fuelSlider.value -= 5;
+		Debug.Log (FuelLevel.fuelSlider.value);
+
 		
 	}
 

@@ -27,15 +27,15 @@ public class EnemyDeath : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (enemyDead) 
-		{
-			deathTimer -= Time.deltaTime;
-			if (deathTimer <= 0) 
-			{
-				anim.SetBool ("isDead", false);
-				enemyDead = false;
-			}
-		}
+	//	if (enemyDead) 
+	//	{
+	//		deathTimer -= Time.deltaTime;
+	//		if (deathTimer <= 0) 
+	//		{
+		//		anim.SetTrigger ("isDead");
+		//		enemyDead = false;
+		//	}
+		//}
 
 		if (enemyAttacking) 
 		{
@@ -71,6 +71,7 @@ public class EnemyDeath : MonoBehaviour {
 	}
 	public void EnemyDead()
 	{
+		
 		anim.SetBool ("isDead", true);
 		enemyDead = true;
 		Debug.Log ("enemy dead");

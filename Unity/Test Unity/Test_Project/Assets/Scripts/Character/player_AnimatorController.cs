@@ -10,7 +10,9 @@ public class player_AnimatorController : MonoBehaviour
  		Stationary, Forward, Backward, Left, Right, LeftForward, RightForward, LeftBackward, RightBackward
 	}
 	public static player_AnimatorController Instance;
+
 	public Direction MoveDirection { get; set;}
+
 	public Animator anim;
 
 	void Awake () 
@@ -43,6 +45,14 @@ public class player_AnimatorController : MonoBehaviour
 		anim.SetTrigger ("isAttacking");
 
 	}
+	public void PlayerBurn()
+	{
+		anim.SetTrigger ("isBurning");
+	}
+	public void PlayerPush()
+	{
+		anim.SetTrigger ("isPushing");
+	}
 	public void PlayerReceiveAttack()
 	{
 		anim.SetTrigger ("isTakeDamage");
@@ -58,27 +68,31 @@ public class player_AnimatorController : MonoBehaviour
 		if (player_Motor2.Instance.moveVector.z > 0) 
 		{
 			
+
 			forward = true;
+			anim.SetFloat ("horizontal", 1);
+
 
 		}
 		if (player_Motor2.Instance.moveVector.z < 0) 
 		{
-			
+			anim.SetFloat ("horizontal", -1);
 			backward = true;
+
 		}
 		if (player_Motor2.Instance.moveVector.x > 0) 
 		{
-			
+			anim.SetFloat ("vertical", -1);
 			right = true;
 		}
 		if (player_Motor2.Instance.moveVector.x < 0) 
 		{
-			
+			anim.SetFloat ("vertical", 1);
 			left = true;
 		}
 
 		if (forward) {
-			anim.SetFloat ("horizontal", 1);
+			
 
 			if (left)
 				MoveDirection = Direction.LeftForward;
@@ -89,7 +103,7 @@ public class player_AnimatorController : MonoBehaviour
 			
 		} else if (backward) {
 			
-			anim.SetFloat ("horizontal", -1);
+
 			if (left)
 				MoveDirection = Direction.LeftBackward;
 			else if (right)
@@ -100,21 +114,22 @@ public class player_AnimatorController : MonoBehaviour
 		} 
 		else if (left) {
 			
-			anim.SetFloat ("vertical", 1);
+
 			MoveDirection = Direction.Left;
 
 		} 
 		else if (right) {
 			
-			anim.SetFloat ("vertical", -1);
+
 			MoveDirection = Direction.Right;
 
 		}
 		
 		else 
 		{
+
 			MoveDirection = Direction.Stationary;
-			anim.SetFloat ("horizontal",0);
+
 
 		}
 

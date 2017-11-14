@@ -7,17 +7,35 @@ public class player_Controller : MonoBehaviour
 	public static CharacterController characterController; // getting character controller reference
 	public static player_Controller Instance; // naming reference to this script in a reference to itself.
 	public static FuelLevel FuelLevel;
-	public static EnemyDeath enemyDeath;
+
+	//references to enemies
+	public static EnemyDeath enemyDeath; // to control when the enemy dies/is stunned
+	public Chase chaseScript; //refence to chase script for when player has thrown grenade
+
+	//Light object
+	public Light lantern;
 
 	//grenade object
 	public GameObject grenade;
 	public Transform grenadeTarget;
+	public bool canThrowGrenade = false;
 
 
-	//list of enemys can attack
+	//push object
+	public GameObject pushObj;
+	bool canPushObj = false;
+	public float pushForce = 10f;
 
-	List<GameObject> enemyObjs = new List<GameObject>();
+	//burn object
+	public GameObject burnObj;
+	bool canBurnObj = false;
 
+
+	//return light back to white
+	private Color lerpCol;
+	private bool resetColor;
+	private float lerpValue;
+	private float lerpDuration = 10f;
 
 	// Use this for initialization
 	void Awake () 
@@ -25,9 +43,11 @@ public class player_Controller : MonoBehaviour
 		characterController = GetComponent("CharacterController") as CharacterController; // because it returns of tyoe object need to convert its type (as CharacterController)
 		Instance = this; // points to the isntance created by unity of this script.
 		FuelLevel = GetComponent<FuelLevel>();
+		lantern = lantern.GetComponent<Light> ();
 
-
+		lerpValue = 0f;
 	}
+
 	
 	// Update is called once per frame
 	void Update () 
@@ -41,10 +61,22 @@ public class player_Controller : MonoBehaviour
 		HandleActionInput ();
 		player_Motor2.Instance.UpdateMotor();
 
-		//if (Input.GetKeyUp (KeyCode.Mouse1)) 
-		//{
-			//Attack (transform.position, 5);
-		//}
+
+		if (resetColor) 
+		{
+			lerpValue += Time.deltaTime / lerpDuration;
+			lantern.color = Color.Lerp (lantern.color, Color.white, lerpValue);
+			if (lantern.color == Color.white) {
+				lerpValue = 0f;
+				resetColor = false;
+			}
+		}
+	}
+
+	void StartColourReset()
+	{
+		lerpValue = 0f;
+		resetColor = true;
 	}
 
 	void GetMovementInput() // getting info from playerMotor about movement
@@ -72,41 +104,113 @@ public class player_Controller : MonoBehaviour
 
 	void HandleActionInput()
 	{
-		//input from player?
-		if (Input.GetButton ("Jump")) 
-		{
-			Jump ();
-		}
+
+
+		//check if youve pushed fire
+		//
 		if (Input.GetKeyUp (KeyCode.Mouse0)) 
 		{
-			player_AnimatorController.Instance.PlayerAttack ();
-			Attack ();
+			if(canThrowGrenade)
+			{
+				lantern.color = Color.green;
+				lerpCol = lantern.color;
+				player_AnimatorController.Instance.PlayerAttack ();
+				//determine which attack should be used
+				Attack ();
+			}
 
+			if(canPushObj)
+			{
+				player_AnimatorController.Instance.PlayerPush ();
+				lantern.color = Color.blue;
+				lerpCol = lantern.color;
+				PushObject ();
+			}
+
+			if(canBurnObj)
+			{
+				lantern.color = Color.red;
+				lerpCol = lantern.color;
+				player_AnimatorController.Instance.PlayerBurn ();
+				BurnObject ();
+			}
 
 		}
+
 	}
 
-	void Jump() // anything i need jump to do should go here
-	{
-		player_Motor2.Instance.Jump ();
-		//animation
-		//sound effect
-	}
+
+
 
 	public void Attack()
 	{	
 
-		if (FuelLevel.fuelSlider.value >= 0)
+		if (FuelLevel.fuelSlider.value >= 0 && canThrowGrenade == true)
 		{
 			//instanciate object
-			GameObject tempGrenadeObject = Instantiate(grenade, grenadeTarget.transform.position, Quaternion.identity);
+			GameObject tempGrenadeObject = Instantiate(grenade, grenadeTarget.transform.position,Quaternion.identity);
 			//Instantiate(grenade, new Vector3(0,0,0), Quaternion.identity);
-			
 			FuelLevel.fuelSlider.value -= 5;
-			Debug.Log (FuelLevel.fuelSlider.value);
+			canThrowGrenade = false;
+
+			//send enemy to grenade
+			chaseScript.player = tempGrenadeObject.transform;
+			//Debug.Log (chaseScript.player.name);
+
+			//Debug.Log (FuelLevel.fuelSlider.value);
+
 		}
 
-		
+
+		if (FuelLevel.fuelSlider.value <= 0) 
+		{
+			Debug.Log ("Not enough Light to throw grenades.");
+			return;
+		}
+
+		StartColourReset();
+	}
+	public void PushObject()
+	{
+
+
+		if (FuelLevel.fuelSlider.value >= 0 && canPushObj == true)
+		{
+			pushObj.GetComponent<Rigidbody> ().AddForce (transform.forward * pushForce);
+			FuelLevel.fuelSlider.value -= 5;
+			canPushObj = false;
+
+		}
+
+
+		if (FuelLevel.fuelSlider.value <= 0) 
+		{
+			Debug.Log ("Not enough Light to push objects.");
+			return;
+		}
+
+		StartColourReset();
+	}
+	public void BurnObject()
+	{
+
+
+		if (FuelLevel.fuelSlider.value >= 0 && canBurnObj == true)
+		{
+			burnObj.SetActive (false);
+			FuelLevel.fuelSlider.value -= 5;
+			canBurnObj = false;
+			canThrowGrenade = true;
+
+		}
+
+
+		if (FuelLevel.fuelSlider.value <= 0) 
+		{
+			Debug.Log ("Not enough Light to push objects.");
+			return;
+		}
+		StartColourReset();
 	}
 
 	public void PlayerDeath()
@@ -116,9 +220,40 @@ public class player_Controller : MonoBehaviour
 		player_AnimatorController.Instance.PlayerDie ();
 	}
 
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "pushable") 
+		{
+			canThrowGrenade = false;
+			pushObj = other.gameObject;
 
+			canPushObj = true;
+		}
+		if (other.gameObject.tag == "burnable") 
+		{
+			canThrowGrenade = false;
+			burnObj = other.gameObject;
 
+			canBurnObj = true;
+		}
+	}
 
+	void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.tag == "pushable") 
+		{
+			pushObj = null;
+			canPushObj = false;
+			canThrowGrenade = true;
+		}
+
+		if (other.gameObject.tag == "burnable") 
+		{
+			burnObj = null;
+			canBurnObj = false;
+			canThrowGrenade = true;
+		}
+	}
 
 	}
 

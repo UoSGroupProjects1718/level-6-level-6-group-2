@@ -210,7 +210,7 @@ public class player_Camera : MonoBehaviour
 	void Reset()
 	{
 		mouseX = 0;
-		mouseY = 10;
+		mouseY = 3;
 		distance = startDistance;
 		desiredDistance = distance;
 	}

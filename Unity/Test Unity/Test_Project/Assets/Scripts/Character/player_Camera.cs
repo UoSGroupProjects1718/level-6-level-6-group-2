@@ -56,7 +56,7 @@ public class player_Camera : MonoBehaviour
 	{
 
 		//lock cursor to centre of screen
-		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.lockState = CursorLockMode.Confined;
 	//need to validate our distance
 
 
@@ -90,13 +90,11 @@ public class player_Camera : MonoBehaviour
 	{
 		var deadZone = 0.1f;
 
-		mouseX += Input.GetAxis("Mouse X") * x_Mouse_Sensitivity * Time.deltaTime;
-		mouseY -= Input.GetAxis("Mouse Y") * y_Mouse_Sensitivity * Time.deltaTime;
-
-
 		if (Input.GetMouseButton (1)) 
 		{
 			//the RMB is down, get mouse axis input
+			mouseX += Input.GetAxis("Mouse X") * x_Mouse_Sensitivity * Time.deltaTime;
+			mouseY -= Input.GetAxis("Mouse Y") * y_Mouse_Sensitivity * Time.deltaTime;
 
 		}
 

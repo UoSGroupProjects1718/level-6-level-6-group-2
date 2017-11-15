@@ -37,6 +37,9 @@ public class player_Controller : MonoBehaviour
 	private float lerpValue;
 	private float lerpDuration = 10f;
 
+	//bool to check if player is near a mirror
+	public bool isNearMirror;
+
 	// Use this for initialization
 	void Awake () 
 	{
@@ -106,36 +109,48 @@ public class player_Controller : MonoBehaviour
 	{
 
 
-		//check if youve pushed fire
-		//
-		if (Input.GetKeyUp (KeyCode.Mouse0)) 
-		{
-			if(canThrowGrenade)
-			{
-				lantern.color = Color.green;
-				lerpCol = lantern.color;
-				player_AnimatorController.Instance.PlayerAttack ();
-				//determine which attack should be used
-				Attack ();
-			}
+			//check if youve pushed fire
 
-			if(canPushObj)
+			if (Input.GetKeyDown (KeyCode.Mouse0)) //if hold fire down
 			{
-				player_AnimatorController.Instance.PlayerPush ();
-				lantern.color = Color.blue;
-				lerpCol = lantern.color;
-				PushObject ();
+				if(canPushObj) //push object
+				{
+					player_AnimatorController.Instance.PlayerPush ();
+					lantern.color = Color.blue;
+					lerpCol = lantern.color;
+					PushObject ();
+				}
 			}
-
-			if(canBurnObj)
+			//
+			if (Input.GetKeyUp (KeyCode.Mouse0)) //When fire is released
 			{
-				lantern.color = Color.red;
-				lerpCol = lantern.color;
-				player_AnimatorController.Instance.PlayerBurn ();
-				BurnObject ();
-			}
 
-		}
+				if(canThrowGrenade)
+				{
+					lantern.color = Color.green;
+					lerpCol = lantern.color;
+					player_AnimatorController.Instance.PlayerAttack ();
+					//determine which attack should be used
+					Attack ();
+				}
+
+				if(canBurnObj)
+				{
+					lantern.color = Color.red;
+					lerpCol = lantern.color;
+					player_AnimatorController.Instance.PlayerBurn ();
+					BurnObject ();
+				}
+
+				if (pushObj.transform.parent = this.gameObject.transform) 
+				{
+					pushObj.transform.parent = null;
+				}
+
+			}
+		
+
+
 
 	}
 
@@ -176,7 +191,8 @@ public class player_Controller : MonoBehaviour
 
 		if (FuelLevel.fuelSlider.value >= 0 && canPushObj == true)
 		{
-			pushObj.GetComponent<Rigidbody> ().AddForce (transform.forward * pushForce);
+			//pushObj.GetComponent<Rigidbody> ().AddForce (transform.forward * pushForce);
+			pushObj.transform.parent = this.gameObject.transform;
 			FuelLevel.fuelSlider.value -= 5;
 			canPushObj = false;
 
@@ -236,12 +252,17 @@ public class player_Controller : MonoBehaviour
 
 			canBurnObj = true;
 		}
+		if (other.gameObject.tag == "Reflect") 
+		{
+			isNearMirror = true;
+			canThrowGrenade = false;
+		}
 	}
 
 	void OnTriggerExit(Collider other)
 	{
 		if (other.gameObject.tag == "pushable") 
-		{
+		{			
 			pushObj = null;
 			canPushObj = false;
 			canThrowGrenade = true;
@@ -251,6 +272,11 @@ public class player_Controller : MonoBehaviour
 		{
 			burnObj = null;
 			canBurnObj = false;
+			canThrowGrenade = true;
+		}
+		if (other.gameObject.tag == "Reflect") 
+		{
+			isNearMirror = false;
 			canThrowGrenade = true;
 		}
 	}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(LineRenderer))]
-public class Laser : MonoBehaviour
+public class laser : MonoBehaviour
 {
 
     public float updateFreq = 0.1f;

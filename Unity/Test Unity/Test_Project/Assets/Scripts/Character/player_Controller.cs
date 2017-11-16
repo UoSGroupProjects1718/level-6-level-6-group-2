@@ -65,7 +65,7 @@ public class player_Controller : MonoBehaviour
 		player_Motor2.Instance.UpdateMotor();
 
 
-		if (resetColor) 
+		if (resetColor) //resetting the colour of the lantern
 		{
 			lerpValue += Time.deltaTime / lerpDuration;
 			lantern.color = Color.Lerp (lantern.color, Color.white, lerpValue);
@@ -127,18 +127,20 @@ public class player_Controller : MonoBehaviour
 
 				if(canThrowGrenade)
 				{
-					lantern.color = Color.green;
+				player_AnimatorController.Instance.PlayerAttack ();	
+				lantern.color = Color.green;
 					lerpCol = lantern.color;
-					player_AnimatorController.Instance.PlayerAttack ();
+					
 					//determine which attack should be used
 					Attack ();
 				}
 
 				if(canBurnObj)
 				{
-					lantern.color = Color.red;
+				player_AnimatorController.Instance.PlayerBurn ();	
+				lantern.color = Color.red;
 					lerpCol = lantern.color;
-					player_AnimatorController.Instance.PlayerBurn ();
+					
 					BurnObject ();
 				}
 

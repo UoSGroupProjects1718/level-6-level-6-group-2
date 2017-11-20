@@ -90,7 +90,7 @@ public class player_Camera : MonoBehaviour
 	{
 		var deadZone = 0.1f;
 
-		if (Input.GetMouseButton (1)) 
+		if (Input.GetMouseButton (2)) 
 		{
 			//the RMB is down, get mouse axis input
 			mouseX += Input.GetAxis("Mouse X") * x_Mouse_Sensitivity * Time.deltaTime;

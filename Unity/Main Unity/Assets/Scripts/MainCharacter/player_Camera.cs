@@ -45,6 +45,8 @@ public class player_Camera : MonoBehaviour
 
 
 
+
+
 	void Awake()
 	{
 		Instance = this;
@@ -52,7 +54,12 @@ public class player_Camera : MonoBehaviour
 
 	void Start () 
 	{
+
+		//lock cursor to centre of screen
+		Cursor.lockState = CursorLockMode.Confined;
 	//need to validate our distance
+
+
 		distance = Mathf.Clamp(distance, distanceMin, distanceMax); // take our current distance, and make sure its set between min & max dist
 		startDistance = distance;
 		Reset ();
@@ -83,13 +90,12 @@ public class player_Camera : MonoBehaviour
 	{
 		var deadZone = 0.1f;
 
-
-
 		if (Input.GetMouseButton (1)) 
 		{
 			//the RMB is down, get mouse axis input
-			mouseX += Input.GetAxis("Mouse X") * x_Mouse_Sensitivity;
-			mouseY -= Input.GetAxis("Mouse Y") * y_Mouse_Sensitivity;
+			mouseX += Input.GetAxis("Mouse X") * x_Mouse_Sensitivity * Time.deltaTime;
+			mouseY -= Input.GetAxis("Mouse Y") * y_Mouse_Sensitivity * Time.deltaTime;
+
 		}
 
 		// clamp/limit mouse y rotation
@@ -202,7 +208,7 @@ public class player_Camera : MonoBehaviour
 	void Reset()
 	{
 		mouseX = 0;
-		mouseY = 10;
+		mouseY = 3;
 		distance = startDistance;
 		desiredDistance = distance;
 	}

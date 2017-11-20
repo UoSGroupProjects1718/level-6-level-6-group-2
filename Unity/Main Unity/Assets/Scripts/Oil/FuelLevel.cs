@@ -11,7 +11,7 @@ public class FuelLevel : MonoBehaviour {
     public Light Lantern;
 
 	public player_Controller playerController; // reference to player controller
-	public bool isDead;
+	public bool playerDead;
 
 	public GameObject lanterns;
 	public GameObject playerHAnd;
@@ -42,14 +42,14 @@ public class FuelLevel : MonoBehaviour {
         else if (fuelSlider.value <= 0)
         {
             fuelSlider.value = 0;
-			isDead = true;
+            playerDead = true;
         }
         else if (fuelSlider.value >= maxFuel)
         {
             fuelSlider.value = maxFuel;
         }
 
-		if (isDead) {
+		if (playerDead) {
 			playerController.PlayerDeath();
 			Lantern.intensity = 0;
 		}

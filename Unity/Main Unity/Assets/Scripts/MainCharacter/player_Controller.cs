@@ -7,6 +7,7 @@ public class player_Controller : MonoBehaviour
 	public static CharacterController characterController; // getting character controller reference
 	public static player_Controller Instance; // naming reference to this script in a reference to itself.
 	public static FuelLevel FuelLevel;
+    private Rigidbody thePlayer;
 
 	//references to enemies
 	public static EnemyDeath enemyDeath; // to control when the enemy dies/is stunned
@@ -236,7 +237,8 @@ public class player_Controller : MonoBehaviour
 		Debug.Log ("player dead");
 		player_Motor2.Instance.moveVector = new Vector3 (0, 0, 0);
 		player_AnimatorController.Instance.PlayerDie ();
-	}
+        thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
+    }
 
 	void OnTriggerEnter(Collider other)
 	{

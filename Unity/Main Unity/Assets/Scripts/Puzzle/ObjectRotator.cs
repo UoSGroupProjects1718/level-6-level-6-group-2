@@ -20,20 +20,46 @@ public class ObjectRotator : MonoBehaviour
     {
         if (_isRotating)
         {
-            // offset
-            _mouseOffset = (Input.mousePosition - _mouseReference);
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                // offset
+                _mouseOffset = (Input.mousePosition - _mouseReference);
 
-            // apply rotation
-            _rotation.y = -(_mouseOffset.x + _mouseOffset.y) * _sensitivity;
+                // apply rotation
+                _rotation.y = -(_mouseOffset.x + _mouseOffset.y) * _sensitivity;
 
-            // rotate
-            transform.Rotate(_rotation);
+                // rotate
+                transform.Rotate(_rotation);
+
+                // store mouse
+                _mouseReference = Input.mousePosition;
+            }
+            if (Input.GetKey(KeyCode.Mouse1))
+            {
+                _mouseOffset = (Input.mousePosition - _mouseReference);
+
+                _rotation.x = -(_mouseOffset.y + _mouseOffset.y)* _sensitivity;
+
+                // rotate
+                transform.Rotate(_rotation);
+
+                // store mouse
+                _mouseReference = Input.mousePosition;
+            }
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            // rotating flag
+            _isRotating = true;
 
             // store mouse
             _mouseReference = Input.mousePosition;
         }
     }
-
     void OnMouseDown()
     {
         // rotating flag

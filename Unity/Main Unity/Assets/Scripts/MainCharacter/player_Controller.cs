@@ -256,8 +256,9 @@ public class player_Controller : MonoBehaviour
 		}
 		if (other.gameObject.tag == "Reflect") 
 		{
-			isNearMirror = true;
 			canThrowGrenade = false;
+			isNearMirror = true;
+
 		}
 	}
 

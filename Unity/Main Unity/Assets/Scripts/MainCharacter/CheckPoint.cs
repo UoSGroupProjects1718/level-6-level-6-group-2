@@ -14,7 +14,7 @@ public class CheckPoint : MonoBehaviour
     public static Vector3 GetActiveCheckPointPosition()
     {
         // If player die without activate any checkpoint, we will return a default position
-        Vector3 result = new Vector3(0, 0, 0);
+        Vector3 result = new Vector3(-328.5f, 8.4f, -528.5f);
 
         if (CheckPointsList != null)
         {

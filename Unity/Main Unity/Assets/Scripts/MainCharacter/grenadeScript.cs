@@ -60,7 +60,7 @@ public class grenadeScript : MonoBehaviour {
 	void DestroyObject()
 	{		
 		playerObj.GetComponent<player_Controller> ().canThrowGrenade = true; // set players CanThrowGrenade bool to true.
-		chaseEnemy.GetComponent<Chase>().player = null; //set the chase enemy player varibale to null so there is no grenade to chase
+		//chaseEnemy.GetComponent<Chase>().player = null; //set the chase enemy player varibale to null so there is no grenade to chase
 		Destroy (this.gameObject);
 	}
 

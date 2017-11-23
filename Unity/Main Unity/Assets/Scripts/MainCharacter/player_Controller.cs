@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
 
 public class player_Controller : MonoBehaviour 
 {
 	public static CharacterController characterController; // getting character controller reference
 	public static player_Controller Instance; // naming reference to this script in a reference to itself.
-	public static FuelLevel FuelLevel;
-    private Rigidbody thePlayer;
+	public FuelLevel fuelSlider;
+    public Rigidbody thePlayer;
+    public bool playerDead = false;
 
-	//references to enemies
-	public static EnemyDeath enemyDeath; // to control when the enemy dies/is stunned
+    //references to enemies
+    public static EnemyDeath enemyDeath; // to control when the enemy dies/is stunned
 	public Chase chaseScript; //refence to chase script for when player has thrown grenade
 
 	//Light object
@@ -46,7 +49,7 @@ public class player_Controller : MonoBehaviour
 	{
 		characterController = GetComponent("CharacterController") as CharacterController; // because it returns of tyoe object need to convert its type (as CharacterController)
 		Instance = this; // points to the isntance created by unity of this script.
-		FuelLevel = GetComponent<FuelLevel>();
+		fuelSlider = GetComponent<FuelLevel>();
 		lantern = lantern.GetComponent<Light> ();
 
 		lerpValue = 0f;
@@ -149,38 +152,29 @@ public class player_Controller : MonoBehaviour
 				{
 					pushObj.transform.parent = null;
 				}
-
 			}
-		
-
-
-
 	}
-
-
-
-
 	public void Attack()
 	{	
 
-		if (FuelLevel.fuelSlider.value >= 0 && canThrowGrenade == true)
+		if (fuelSlider.fuelSlider.value >= 0 && canThrowGrenade == true)
 		{
 			//instanciate object
 			GameObject tempGrenadeObject = Instantiate(grenade, grenadeTarget.transform.position,Quaternion.identity);
 			//Instantiate(grenade, new Vector3(0,0,0), Quaternion.identity);
-			FuelLevel.fuelSlider.value -= 5;
+			fuelSlider.fuelSlider.value -= 5;
 			canThrowGrenade = false;
 
 			//send enemy to grenade
-			chaseScript.player = tempGrenadeObject.transform;
+			//chaseScript.player = tempGrenadeObject.transform;
 			//Debug.Log (chaseScript.player.name);
 
-			//Debug.Log (FuelLevel.fuelSlider.value);
+			//Debug.Log (fuelSlider.fuelSlider.value);
 
 		}
 
 
-		if (FuelLevel.fuelSlider.value <= 0) 
+		if (fuelSlider.fuelSlider.value <= 0) 
 		{
 			Debug.Log ("Not enough Light to throw grenades.");
 			return;
@@ -192,17 +186,17 @@ public class player_Controller : MonoBehaviour
 	{
 
 
-		if (FuelLevel.fuelSlider.value >= 0 && canPushObj == true)
+		if (fuelSlider.fuelSlider.value >= 0 && canPushObj == true)
 		{
 			//pushObj.GetComponent<Rigidbody> ().AddForce (transform.forward * pushForce);
 			pushObj.transform.parent = this.gameObject.transform;
-			FuelLevel.fuelSlider.value -= 5;
+			fuelSlider.fuelSlider.value -= 5;
 			canPushObj = false;
 
 		}
 
 
-		if (FuelLevel.fuelSlider.value <= 0) 
+		if (fuelSlider.fuelSlider.value <= 0) 
 		{
 			Debug.Log ("Not enough Light to push objects.");
 			return;
@@ -214,17 +208,17 @@ public class player_Controller : MonoBehaviour
 	{
 
 
-		if (FuelLevel.fuelSlider.value >= 0 && canBurnObj == true)
+		if (fuelSlider.fuelSlider.value >= 0 && canBurnObj == true)
 		{
 			burnObj.SetActive (false);
-			FuelLevel.fuelSlider.value -= 5;
+			fuelSlider.fuelSlider.value -= 5;
 			canBurnObj = false;
 			canThrowGrenade = true;
 
 		}
 
 
-		if (FuelLevel.fuelSlider.value <= 0) 
+		if (fuelSlider.fuelSlider.value <= 0) 
 		{
 			Debug.Log ("Not enough Light to push objects.");
 			return;
@@ -233,12 +227,14 @@ public class player_Controller : MonoBehaviour
 	}
 
 	public void PlayerDeath()
-	{
-		Debug.Log ("player dead");
-		player_Motor2.Instance.moveVector = new Vector3 (0, 0, 0);
-		player_AnimatorController.Instance.PlayerDie ();
-        thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
+	{     
+            playerDead = true;
+            thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
+            Debug.Log("player dead");
+            player_Motor2.Instance.moveVector = new Vector3(0, 0, 0);
+            player_AnimatorController.Instance.PlayerDie();
     }
+
 
 	void OnTriggerEnter(Collider other)
 	{

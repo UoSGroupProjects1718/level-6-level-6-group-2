@@ -2,25 +2,12 @@
 
 public class CheckPoint : MonoBehaviour
 {
-    #region Public Variables
-
+   
     public bool Activated = false;
-
-    #endregion
-
-    #region Private Variables
 
     private Animator thisAnimator;
 
-    #endregion
-
-    #region Static Variables
-
     public static GameObject[] CheckPointsList;
-
-    #endregion
-
-    #region Static Functions
 
 
     /// Get position of the last activated checkpoint
@@ -45,11 +32,6 @@ public class CheckPoint : MonoBehaviour
         return result;
     }
 
-    #endregion
-
-    #region Private Functions
-
-
     private void ActivateCheckPoint()
     {
         // We deactive all checkpoints in the scene
@@ -64,9 +46,7 @@ public class CheckPoint : MonoBehaviour
         thisAnimator.SetBool("Active", true);
     }
 
-    #endregion
-
-    void Start()
+   void Start()
     {
         thisAnimator = GetComponent<Animator>();
 

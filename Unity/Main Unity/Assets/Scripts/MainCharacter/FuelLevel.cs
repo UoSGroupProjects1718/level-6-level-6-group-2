@@ -51,6 +51,8 @@ public class FuelLevel : MonoBehaviour {
         if (other.gameObject.tag == "Oil")
         {
             fuelSlider.value = maxFuel;
+			Debug.Log ("Gained Fuel");
+			other.gameObject.SetActive (false);
         }
     }
 }

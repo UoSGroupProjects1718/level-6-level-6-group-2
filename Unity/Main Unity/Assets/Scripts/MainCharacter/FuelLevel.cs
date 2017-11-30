@@ -38,8 +38,12 @@ public class FuelLevel : MonoBehaviour {
         if (fuelSlider.value <= 0)
         {                
             fuelSlider.value = 0;
-            player_Controller.Instance.PlayerDeath();   
-                                       
+			player_Controller.Instance.playerDead = true;
+			//need to put respawn stuff here
+			//but for the moment I'm just setting the fuel slider back to full
+			//sorry lewis, dont hurt me. :P
+			fuelSlider.value = maxFuel;
+			                          
         }
         else if (fuelSlider.value >= maxFuel)
         {

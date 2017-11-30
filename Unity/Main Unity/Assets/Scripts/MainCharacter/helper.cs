@@ -5,13 +5,13 @@ public static class helper
 {
 	//clamp angle method
 	//allows to calculate four points for camera clipping/occlusion
-	public struct ClipPlanePoints
+/*	public struct ClipPlanePoints
 	{
 		public Vector3 UpLeft;
 		public Vector3 UpRight;
 		public Vector3 LowLeft;
 		public Vector3 LowRight;
-	}
+	}*/
 
 	public static float ClampAngle(float angle, float min, float max)
 	{
@@ -25,10 +25,10 @@ public static class helper
 			
 		}while(angle < -360 || angle > 360);
 		
-		return Mathf.Clamp (angle , min, max);
+		return Mathf.Clamp (angle, min, max);
 	}
 
-	public static ClipPlanePoints ClipPlaneAtNear(Vector3 pos)
+	/*public static ClipPlanePoints ClipPlaneAtNear(Vector3 pos)
 	{
 		var clipPlanePoints = new ClipPlanePoints ();
 
@@ -61,5 +61,5 @@ public static class helper
 		clipPlanePoints.UpLeft += transforms.forward * distance; 
 
 		return clipPlanePoints;
-	}
+	}*/
 }

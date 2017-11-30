@@ -25,7 +25,7 @@ public class player_Camera : MonoBehaviour
 	public float x_MinLimit = 80f;
 	public float y_MaxLimit = 20f;
 	public float x_MaxLimit = 80f;
-	public float occlusionDistStep = 0.5f;
+	public float occlusionDistStep = 0.5f; //how much to bring camera in if the camera is occluded
 	public int maxOcclusionCheck = 10; // number of times iterating through check
 
 
@@ -36,6 +36,7 @@ public class player_Camera : MonoBehaviour
 	private float velocZ = 0f;
 	private float velDistance = 0f;
 	private float startDistance = 0f;
+
 	private Vector3 desiredPosition = Vector3.zero;
 	private float desiredDistance = 0f;
 //	private float distanceSmooth = 0f;
@@ -49,7 +50,9 @@ public class player_Camera : MonoBehaviour
 
 	void Awake()
 	{
+		//CharacterController = GetComponent ("CharacterController") as CharacterController;
 		Instance = this;
+		//player_Camera.UseExcistingOrCreateCamera ();
 	}
 
 	void Start () 
@@ -77,12 +80,12 @@ public class player_Camera : MonoBehaviour
 		HandlePlayerInput ();
 
 		var count = 0;
-		do {
-			CalculateDesiredPosition ();
-			count++;
-		} while(CheckIfOccluded (count));
+		//do {
+		//	CalculateDesiredPosition ();
+		//	count++;
+		//} while(CheckIfOccluded (count));
 
-
+		CalculateDesiredPosition ();
 		UpdatePosition ();
 	}
 
@@ -127,7 +130,7 @@ public class player_Camera : MonoBehaviour
 		return TargetLookAt.position + rotation * direction; // returns desired position offset using target 
 	}
 
-	bool CheckIfOccluded(int count)
+	/*bool CheckIfOccluded(int count)
 	{
 		var isOccluded = false;
 
@@ -137,10 +140,10 @@ public class player_Camera : MonoBehaviour
 		{
 			if (count < maxOcclusionCheck) {
 				isOccluded = true;
-				distance -= occlusionDistStep;
+				distance -= occlusionDistStep; //moving the camera closer if its occluded
 
-				if (distance < 0.25f)
-					distance = 0.25f;
+				if (distance < 30) 
+					distance = 30; //originally 0.25
 			} else
 				distance = nearestDist - Camera.main.nearClipPlane;
 
@@ -190,7 +193,7 @@ public class player_Camera : MonoBehaviour
 				nearDist = hitInfo.distance;
 
 		return nearDist;
-	}
+	}*/
 
 	void UpdatePosition()
 	{
@@ -200,15 +203,15 @@ public class player_Camera : MonoBehaviour
 		camPosition = new Vector3 (posX, posY, posZ);
 
 		transform.position = camPosition;
-		transform.LookAt (TargetLookAt);
+transform.LookAt (TargetLookAt);
 
 
 	}
 
 	void Reset()
 	{
-		mouseX = 0;
-		mouseY = 3;
+		mouseX = -3;
+		mouseY = 10;
 		distance = startDistance;
 		desiredDistance = distance;
 	}
@@ -230,7 +233,7 @@ public class player_Camera : MonoBehaviour
 
 		}
 		tempCamera.AddComponent<player_Camera>(); // get script component
-		myCamera = tempCamera.GetComponent("tp_Camera")as player_Camera; // cast as matching type
+		myCamera = tempCamera.GetComponent("player_Camera")as player_Camera; // cast as matching type
 
 		targetLookAt = GameObject.Find ("targetLookAt") as GameObject;
 

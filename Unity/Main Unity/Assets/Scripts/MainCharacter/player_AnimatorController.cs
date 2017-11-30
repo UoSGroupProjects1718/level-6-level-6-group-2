@@ -30,8 +30,10 @@ public class player_AnimatorController : MonoBehaviour
 
 	public void PlayerDie()
 	{
-
+		
 		anim.SetTrigger("isDying");
+
+		//anim.SetBool ("isDead", true);
 	}
 
 	public void PlayerAttack()

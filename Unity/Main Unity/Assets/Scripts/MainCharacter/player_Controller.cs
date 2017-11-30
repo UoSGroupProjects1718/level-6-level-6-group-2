@@ -68,7 +68,14 @@ public class player_Controller : MonoBehaviour
         HandleActionInput();
         player_Motor2.Instance.UpdateMotor();
 
+		if (Input.GetKeyDown (KeyCode.L)) 
+		{
+			playerDead = true;
+		}
 
+		if (playerDead) {
+			PlayerDeath ();
+		}
         if (resetColor) //resetting the colour of the lantern
         {
             lerpValue += Time.deltaTime / lerpDuration;
@@ -229,11 +236,14 @@ public class player_Controller : MonoBehaviour
 
 	public void PlayerDeath()
 	{     
-            playerDead = true;
+            //playerDead = true;
             thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
-            Debug.Log("player dead");
+            
             //player_Motor2.Instance.moveVector = new Vector3(0, 0, 0);
-            //player_AnimatorController.Instance.PlayerDie();
+            player_AnimatorController.Instance.PlayerDie();
+		Debug.Log("player dead");
+		playerDead = false;
+
     }
 
 

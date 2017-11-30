@@ -19,8 +19,8 @@ public class player_Controller : MonoBehaviour
 	//Light object
 	public Light lantern;
 
-	//grenade object
-	public GameObject grenade;
+    //grenade object
+    public GameObject grenade;
 	public Transform grenadeTarget;
 	public bool canThrowGrenade = false;
 
@@ -51,34 +51,35 @@ public class player_Controller : MonoBehaviour
 		Instance = this; // points to the isntance created by unity of this script.
 		fuelSlider = GetComponent<FuelLevel>();
 		lantern = lantern.GetComponent<Light> ();
-
 		lerpValue = 0f;
+
 	}
 
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		if (Camera.main == null) 
-		{
-			return; // if there is no camera, do nothing.
-		}
 
-		GetMovementInput ();
-		HandleActionInput ();
-		player_Motor2.Instance.UpdateMotor();
+    // Update is called once per frame
+    void Update()
+    {
+        if (Camera.main == null)
+        {
+            return; // if there is no camera, do nothing.
+        }
+
+        GetMovementInput();
+        HandleActionInput();
+        player_Motor2.Instance.UpdateMotor();
 
 
-		if (resetColor) //resetting the colour of the lantern
-		{
-			lerpValue += Time.deltaTime / lerpDuration;
-			lantern.color = Color.Lerp (lantern.color, Color.white, lerpValue);
-			if (lantern.color == Color.white) {
-				lerpValue = 0f;
-				resetColor = false;
-			}
-		}
-	}
+        if (resetColor) //resetting the colour of the lantern
+        {
+            lerpValue += Time.deltaTime / lerpDuration;
+            lantern.color = Color.Lerp(lantern.color, Color.white, lerpValue);
+            if (lantern.color == Color.white)
+            {
+                lerpValue = 0f;
+                resetColor = false;
+            }
+        }
+    }
 
 	void StartColourReset()
 	{
@@ -111,8 +112,6 @@ public class player_Controller : MonoBehaviour
 
 	void HandleActionInput()
 	{
-
-
 			//check if youve pushed fire
 
 			if (Input.GetKeyDown (KeyCode.Mouse0)) //if hold fire down
@@ -154,6 +153,8 @@ public class player_Controller : MonoBehaviour
 				}
 			}
 	}
+
+
 	public void Attack()
 	{	
 
@@ -231,8 +232,8 @@ public class player_Controller : MonoBehaviour
             playerDead = true;
             thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
             Debug.Log("player dead");
-            player_Motor2.Instance.moveVector = new Vector3(0, 0, 0);
-            player_AnimatorController.Instance.PlayerDie();
+            //player_Motor2.Instance.moveVector = new Vector3(0, 0, 0);
+            //player_AnimatorController.Instance.PlayerDie();
     }
 
 

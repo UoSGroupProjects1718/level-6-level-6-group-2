@@ -18,9 +18,9 @@ public class player_Motor2 : MonoBehaviour
 	// Use this for initialization
 	void Awake() 
 	{
-		Instance = this; 
-		
-	}
+		Instance = this;
+
+    }
 	
 	// want to tell this when to update.
 	public void UpdateMotor() 

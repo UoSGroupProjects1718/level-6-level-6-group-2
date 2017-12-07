@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dialogue : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+[System.Serializable]
+public class Dialogue {
+
+    public string npc;
+
+
+
+
+
+    [TextArea(3, 10)]
+    public string[] npcText;
+
 }

@@ -121,14 +121,14 @@ public class player_Controller : MonoBehaviour
 	{
 			//check if youve pushed fire
 
-			if (Input.GetKeyDown (KeyCode.Mouse0)) //if hold fire down
+			/*if (Input.GetKeyDown (KeyCode.Mouse0)) //if hold fire down
 			{
 				if(canPushObj) //push object
 				{
 					player_AnimatorController.Instance.PlayerPush ();
 					lantern.color = Color.blue;
 					lerpCol = lantern.color;
-					PushObject ();
+					//PushObject ();
 				}
 			}
 			//
@@ -142,7 +142,7 @@ public class player_Controller : MonoBehaviour
 					lerpCol = lantern.color;
 					
 					//determine which attack should be used
-					Attack ();
+					//Attack ();
 				}
 
 				if(canBurnObj)
@@ -151,18 +151,18 @@ public class player_Controller : MonoBehaviour
 				lantern.color = Color.red;
 					lerpCol = lantern.color;
 					
-					BurnObject ();
+					//BurnObject ();
 				}
 
 				if (pushObj.transform.parent = this.gameObject.transform) 
 				{
 					pushObj.transform.parent = null;
 				}
-			}
+			}*/
 	}
 
 
-	public void Attack()
+    /*public void Attack()
 	{	
 
 		if (fuelSlider.fuelSlider.value >= 0 && canThrowGrenade == true)
@@ -232,9 +232,9 @@ public class player_Controller : MonoBehaviour
 			return;
 		}
 		StartColourReset();
-	}
+	}*/
 
-	public void PlayerDeath()
+    public void PlayerDeath()
 	{     
             //playerDead = true;
             thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();

@@ -58,6 +58,8 @@ void Update()
         {
             _canRotate = true;
             Debug.Log("Rotate!!!!!!!!!!!");
+			Debug.Log (_canRotate);
+			Debug.Log (hitInfo);
         }
         else
         {

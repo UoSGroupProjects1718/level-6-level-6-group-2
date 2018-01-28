@@ -35,6 +35,7 @@ public class Objects : MonoBehaviour {
     {
         Instantiate(destroyed, blockade.position, blockade.rotation);
         Destroy(exitNode);
+        destroyed.gameObject.SetActive(false);
         yield return null;
     }
 

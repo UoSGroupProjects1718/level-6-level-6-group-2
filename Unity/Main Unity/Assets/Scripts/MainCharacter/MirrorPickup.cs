@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MirrorPickup : MonoBehaviour {
 
-
     public GameObject pickUp;
     public GameObject temp;
     public Transform pickUpLocation;

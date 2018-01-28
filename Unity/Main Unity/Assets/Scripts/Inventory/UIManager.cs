@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
 
@@ -9,19 +10,16 @@ public class UIManager : MonoBehaviour {
 
     public Transform canvas;
     public Transform inventory;
+    public Transform pauseM;
+
+    public static bool IsPaused = false;
 
     private void Awake()
     {
         inventory = canvas.Find("Inventory");
-        
+        pauseM = canvas.Find("PauseMenu");
     }
 
-
-    void Start () {
-
-        
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,8 +27,49 @@ public class UIManager : MonoBehaviour {
         {
             ToggleInventory();
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(IsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
 	}
 
+    public void Resume ()
+    {
+        pauseM.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
+        IsPaused = false;
+    }
+
+    void Pause ()
+    {
+        pauseM.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+        IsPaused = true;
+    }
+
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("Main Menu");      
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void Settings()
+    {
+
+    }
 
     public void ToggleInventory()
     {

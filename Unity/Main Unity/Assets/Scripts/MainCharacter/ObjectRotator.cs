@@ -10,7 +10,7 @@ public class ObjectRotator : MonoBehaviour
     private bool _isRotating;
     private bool _canRotate;
 
-    public float sphereRadius = 2.0f;
+    public float sphereRadius = 3.0f;
     public float maxCastDist = 5.0f;
 
     void Start()

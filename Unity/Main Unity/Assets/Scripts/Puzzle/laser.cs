@@ -15,7 +15,8 @@ public class laser : MonoBehaviour
     public int mSplit;
     private float time = 0;
 
-    public GameObject Platform;
+    public GameObject puzzlePlatform;
+    
 
     private LineRenderer lLineRenderer;
     public PuzzleManager puzzleM;
@@ -23,9 +24,12 @@ public class laser : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
         time = 0;
         lLineRenderer = gameObject.GetComponent<LineRenderer>();
-        gameObject.GetComponent<LineRenderer>().enabled = false;       
+        gameObject.GetComponent<LineRenderer>().enabled = false;
+       
+              
     }
     // Update is called once per frame
     void Update()
@@ -48,17 +52,20 @@ public class laser : MonoBehaviour
             StartCoroutine(PLight());
         }
     }
-    private void OnCollisionEnter(Collision platform)
+
+
+    public void StartL()
     {
-        if (platform.gameObject.tag == "Player")
-        {
-            gameObject.GetComponent<LineRenderer>().enabled = true;
-        }
-        else
-        {
-            lLineRenderer.enabled = false;
-        }
+        StartCoroutine(PLight());
+        gameObject.GetComponent<LineRenderer>().enabled = true;
     }
+
+    public void Stopl()
+    {
+        gameObject.GetComponent<LineRenderer>().enabled = false;
+        StopAllCoroutines();
+    }
+
     IEnumerator PLight()
     {
         int lSplit = 1;

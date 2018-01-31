@@ -19,20 +19,15 @@ public class player_Controller : MonoBehaviour
 	//Light object
 	public Light lantern;
 
-    //grenade object
-    public GameObject grenade;
-	public Transform grenadeTarget;
-	public bool canThrowGrenade = false;
 
-
-	//push object
-	public GameObject pushObj;
-	bool canPushObj = false;
-	public float pushForce = 10f;
 
 	//burn object
 	public GameObject burnObj;
 	bool canBurnObj = false;
+
+    //light object
+    bool canLightObj = false;
+    GameObject lightObj;
 
 
 	//return light back to white
@@ -68,10 +63,7 @@ public class player_Controller : MonoBehaviour
         HandleActionInput();
         player_Motor2.Instance.UpdateMotor();
 
-		if (Input.GetKeyDown (KeyCode.L)) 
-		{
-			playerDead = true;
-		}
+
 
 		if (playerDead) {
 			PlayerDeath ();
@@ -121,29 +113,8 @@ public class player_Controller : MonoBehaviour
 	{
 			//check if youve pushed fire
 
-			/*if (Input.GetKeyDown (KeyCode.Mouse0)) //if hold fire down
+			if (Input.GetKeyUp (KeyCode.E)) //When fire is released
 			{
-				if(canPushObj) //push object
-				{
-					player_AnimatorController.Instance.PlayerPush ();
-					lantern.color = Color.blue;
-					lerpCol = lantern.color;
-					//PushObject ();
-				}
-			}
-			//
-			if (Input.GetKeyUp (KeyCode.Mouse0)) //When fire is released
-			{
-
-				if(canThrowGrenade)
-				{
-				player_AnimatorController.Instance.PlayerAttack ();	
-				lantern.color = Color.green;
-					lerpCol = lantern.color;
-					
-					//determine which attack should be used
-					//Attack ();
-				}
 
 				if(canBurnObj)
 				{
@@ -151,78 +122,26 @@ public class player_Controller : MonoBehaviour
 				lantern.color = Color.red;
 					lerpCol = lantern.color;
 					
-					//BurnObject ();
+					BurnObject ();
 				}
 
-				if (pushObj.transform.parent = this.gameObject.transform) 
-				{
-					pushObj.transform.parent = null;
-				}
-			}*/
+            if (canLightObj)
+            {
+                LightObject();
+            }
+
+
+			}
 	}
 
-
-    /*public void Attack()
-	{	
-
-		if (fuelSlider.fuelSlider.value >= 0 && canThrowGrenade == true)
-		{
-			//instanciate object
-			GameObject tempGrenadeObject = Instantiate(grenade, grenadeTarget.transform.position,Quaternion.identity);
-			//Instantiate(grenade, new Vector3(0,0,0), Quaternion.identity);
-			fuelSlider.fuelSlider.value -= 5;
-			canThrowGrenade = false;
-
-			//send enemy to grenade
-			//chaseScript.player = tempGrenadeObject.transform;
-			//Debug.Log (chaseScript.player.name);
-
-			//Debug.Log (fuelSlider.fuelSlider.value);
-
-		}
-
-
-		if (fuelSlider.fuelSlider.value <= 0) 
-		{
-			Debug.Log ("Not enough Light to throw grenades.");
-			return;
-		}
-
-		StartColourReset();
-	}
-	public void PushObject()
-	{
-
-
-		if (fuelSlider.fuelSlider.value >= 0 && canPushObj == true)
-		{
-			//pushObj.GetComponent<Rigidbody> ().AddForce (transform.forward * pushForce);
-			pushObj.transform.parent = this.gameObject.transform;
-			fuelSlider.fuelSlider.value -= 5;
-			canPushObj = false;
-
-		}
-
-
-		if (fuelSlider.fuelSlider.value <= 0) 
-		{
-			Debug.Log ("Not enough Light to push objects.");
-			return;
-		}
-
-		StartColourReset();
-	}
 	public void BurnObject()
 	{
-
-
 		if (fuelSlider.fuelSlider.value >= 0 && canBurnObj == true)
 		{
 			burnObj.SetActive (false);
-			fuelSlider.fuelSlider.value -= 5;
+            fuelSlider.fuelDecrease = 3;
+            fuelSlider.RemoveFuel();
 			canBurnObj = false;
-			canThrowGrenade = true;
-
 		}
 
 
@@ -232,7 +151,25 @@ public class player_Controller : MonoBehaviour
 			return;
 		}
 		StartColourReset();
-	}*/
+	}
+
+    public void LightObject()
+    {
+        if (fuelSlider.fuelSlider.value >= 0 && canLightObj == true)
+        {
+            lightObj.transform.GetChild(0).gameObject.SetActive(true);
+            fuelSlider.fuelDecrease = 5;
+            fuelSlider.RemoveFuel();
+            canLightObj = false;
+        }
+
+
+        if (fuelSlider.fuelSlider.value <= 0)
+        {
+            Debug.Log("Not enough Light to push objects.");
+            return;
+        }
+    }
 
     public void PlayerDeath()
 	{     
@@ -249,49 +186,41 @@ public class player_Controller : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag == "pushable") 
-		{
-			canThrowGrenade = false;
-			pushObj = other.gameObject;
 
-			canPushObj = true;
-		}
 		if (other.gameObject.tag == "burnable") 
 		{
-			canThrowGrenade = false;
+			
 			burnObj = other.gameObject;
 
 			canBurnObj = true;
 		}
-		if (other.gameObject.tag == "Reflect") 
-		{
-			canThrowGrenade = false;
-			isNearMirror = true;
 
-		}
+        if (other.gameObject.tag == "playerLight")
+        {
+            canLightObj = true;
+            lightObj = other.gameObject;
+        }
+
 	}
 
 	void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.tag == "pushable") 
-		{			
-			pushObj = null;
-			canPushObj = false;
-			canThrowGrenade = true;
-		}
+
 
 		if (other.gameObject.tag == "burnable") 
 		{
 			burnObj = null;
 			canBurnObj = false;
-			canThrowGrenade = true;
+			
 		}
-		if (other.gameObject.tag == "Reflect") 
-		{
-			isNearMirror = false;
-			canThrowGrenade = true;
-		}
-	}
+
+        if (other.gameObject.tag == "playerLight")
+        {
+            lightObj = null;
+            canLightObj = false;
+        }
+
+    }
 
 	}
 

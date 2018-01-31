@@ -13,9 +13,10 @@ public class FuelLevel : MonoBehaviour {
     public int fuelFallRate;
     public Light Lantern;
 
-	public GameObject lanterns;
-	public GameObject playerHand;
-	public GameObject lanternTarget;
+    //decrease fuel 
+    public int fuelDecrease;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -28,8 +29,7 @@ public class FuelLevel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		lanterns.transform.parent = playerHand.transform;
-		lanterns.transform.LookAt (lanternTarget.transform);
+
 
         if (fuelSlider.value >= 0)
         {
@@ -50,6 +50,13 @@ public class FuelLevel : MonoBehaviour {
             fuelSlider.value = maxFuel;
         }	
     }
+
+    public void RemoveFuel()
+    {
+        fuelSlider.value = fuelSlider.value - fuelDecrease;
+        fuelDecrease = 0;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Oil")

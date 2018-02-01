@@ -180,6 +180,8 @@ public class player_Controller : MonoBehaviour
         }
     }
 
+    
+
     public void PlayerDeath()
 	{     
             //playerDead = true;

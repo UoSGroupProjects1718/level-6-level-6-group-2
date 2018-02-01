@@ -14,7 +14,8 @@ public class Objects : MonoBehaviour {
     public GameObject light1;
 	public GameObject light2;
 
-
+    //door object
+    public GameObject gate;
  
     public void hitTarget(bool didHit)
     {
@@ -36,6 +37,7 @@ public class Objects : MonoBehaviour {
         Instantiate(destroyed, blockade.position, blockade.rotation);
         Destroy(exitNode);
         destroyed.gameObject.SetActive(false);
+        gate.gameObject.SetActive(false);
         yield return null;
     }
 

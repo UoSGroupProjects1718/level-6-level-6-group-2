@@ -24,6 +24,7 @@ public class player_Controller : MonoBehaviour
 	//burn object
 	public GameObject burnObj;
 	bool canBurnObj = false;
+    ParticleSystem burnparticle;
 
     //light object
     bool canLightObj = false;
@@ -138,11 +139,19 @@ public class player_Controller : MonoBehaviour
 	{
 		if (fuelSlider.fuelSlider.value >= 0 && canBurnObj == true)
 		{
-			burnObj.SetActive (false);
+            
+            burnObj.transform.GetChild(0).gameObject.SetActive(true);
             fuelSlider.fuelDecrease = 3;
             fuelSlider.RemoveFuel();
-			canBurnObj = false;
-		}
+
+            if (burnObj.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().isEmitting == false)
+            {
+
+            }
+            burnObj.SetActive(false);
+            canBurnObj = false;
+
+        }
 
 
 		if (fuelSlider.fuelSlider.value <= 0) 
@@ -189,9 +198,9 @@ public class player_Controller : MonoBehaviour
 
 		if (other.gameObject.tag == "burnable") 
 		{
-			
-			burnObj = other.gameObject;
-
+           
+            burnObj = other.gameObject;
+            
 			canBurnObj = true;
 		}
 

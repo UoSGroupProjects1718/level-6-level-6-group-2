@@ -60,9 +60,13 @@ public class player_Controller : MonoBehaviour
             return; // if there is no camera, do nothing.
         }
 
-        GetMovementInput();
-        HandleActionInput();
-        player_Motor2.Instance.UpdateMotor();
+        if (playerDead == false)
+        {
+            GetMovementInput();
+            HandleActionInput();
+            player_Motor2.Instance.UpdateMotor();
+        }
+
 
 
 
@@ -89,50 +93,55 @@ public class player_Controller : MonoBehaviour
 
 	void GetMovementInput() // getting info from playerMotor about movement
 	{
-		//establish a deadzone
-		var deadzone = 0.1f; // f assigns as a float
-		//gravity
-		player_Motor2.Instance.verticalVelocity = player_Motor2.Instance.moveVector.y;
-		player_Motor2.Instance.moveVector = Vector3.zero; // zero out moveVector, stops motion being additive as we are renewing info each frame
-		if(Input.GetAxis("Vertical") > deadzone || Input.GetAxis("Vertical") < -deadzone) // get vertical axis || if less than or further away than deadzone
 
-		{
-			player_Motor2.Instance.moveVector += new Vector3(0,0,Input.GetAxis("Vertical"));
-		}
+            //establish a deadzone
+            var deadzone = 0.1f; // f assigns as a float
+                                 //gravity
+            player_Motor2.Instance.verticalVelocity = player_Motor2.Instance.moveVector.y;
+            player_Motor2.Instance.moveVector = Vector3.zero; // zero out moveVector, stops motion being additive as we are renewing info each frame
+            if (Input.GetAxis("Vertical") > deadzone || Input.GetAxis("Vertical") < -deadzone) // get vertical axis || if less than or further away than deadzone
 
-
-		if(Input.GetAxis("Horizontal") > deadzone || Input.GetAxis("Horizontal") < -deadzone) // get horizontal axis || if less than or further away than deadzone
-			
-		{
-			player_Motor2.Instance.moveVector += new Vector3(Input.GetAxis("Horizontal"),0,0);
-		}
-		player_AnimatorController.Instance.CurrentDirection ();
-
-	}
-
-	void HandleActionInput()
-	{
-			//check if youve pushed fire
-
-			if (Input.GetKeyUp (KeyCode.E)) //When fire is released
-			{
-
-				if(canBurnObj)
-				{
-				player_AnimatorController.Instance.PlayerBurn ();	
-				lantern.color = Color.red;
-					lerpCol = lantern.color;
-					
-					BurnObject ();
-				}
-
-            if (canLightObj)
             {
-                LightObject();
+                player_Motor2.Instance.moveVector += new Vector3(0, 0, Input.GetAxis("Vertical"));
             }
 
 
-			}
+            if (Input.GetAxis("Horizontal") > deadzone || Input.GetAxis("Horizontal") < -deadzone) // get horizontal axis || if less than or further away than deadzone
+
+            {
+                player_Motor2.Instance.moveVector += new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+            }
+            player_AnimatorController.Instance.CurrentDirection();
+
+        
+
+    }
+
+	void HandleActionInput()
+	{
+        //check if youve pushed fire
+
+            if (Input.GetKeyUp(KeyCode.E)) //When fire is released
+            {
+
+                if (canBurnObj)
+                {
+                    player_AnimatorController.Instance.PlayerBurn();
+                    lantern.color = Color.red;
+                    lerpCol = lantern.color;
+
+                    BurnObject();
+                }
+
+                if (canLightObj)
+                {
+                    LightObject();
+                }
+
+
+            }
+        
+
 	}
 
 	public void BurnObject()
@@ -185,12 +194,13 @@ public class player_Controller : MonoBehaviour
     public void PlayerDeath()
 	{     
             //playerDead = true;
-            thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
+
             
             //player_Motor2.Instance.moveVector = new Vector3(0, 0, 0);
             player_AnimatorController.Instance.PlayerDie();
 		Debug.Log("player dead");
 		playerDead = false;
+        thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
 
     }
 

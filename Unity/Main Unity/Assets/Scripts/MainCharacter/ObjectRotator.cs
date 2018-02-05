@@ -72,7 +72,7 @@ void Update()
         if (Input.GetMouseButtonDown(1) && _canRotate == true)
         {
 
-            // rotating mirror
+            // rotating mirrord
             _isRotating = true;
 
             // store mouse
@@ -84,6 +84,7 @@ void OnMouseDown()
 {
         if (_canRotate == true)
         {
+            Debug.Log("rotating");
             // rotating mirror
             _isRotating = true;
 

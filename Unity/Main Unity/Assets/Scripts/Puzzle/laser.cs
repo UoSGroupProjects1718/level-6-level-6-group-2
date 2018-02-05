@@ -58,12 +58,14 @@ public class laser : MonoBehaviour
     {
         StartCoroutine(PLight());
         gameObject.GetComponent<LineRenderer>().enabled = true;
+        Debug.Log("laser true");
     }
 
     public void Stopl()
     {
         gameObject.GetComponent<LineRenderer>().enabled = false;
         StopAllCoroutines();
+        Debug.Log("laser false");
     }
 
     IEnumerator PLight()

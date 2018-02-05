@@ -34,8 +34,8 @@ public class Objects : MonoBehaviour {
     }
     IEnumerator Block()
     {
-        Instantiate(destroyed, blockade.position, blockade.rotation);
-        Destroy(exitNode);
+       // Instantiate(destroyed, blockade.position, blockade.rotation);
+       // Destroy(exitNode);
         destroyed.gameObject.SetActive(false);
         gate.gameObject.SetActive(false);
         yield return null;

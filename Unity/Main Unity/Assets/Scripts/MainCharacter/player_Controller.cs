@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 
 
 public class player_Controller : MonoBehaviour 
@@ -39,6 +40,10 @@ public class player_Controller : MonoBehaviour
 
 	//bool to check if player is near a mirror
 	public bool isNearMirror;
+
+    //level switch once finished area
+    public int currentLevel;
+
 
 	// Use this for initialization
 	void Awake () 
@@ -220,6 +225,10 @@ public class player_Controller : MonoBehaviour
         {
             canLightObj = true;
             lightObj = other.gameObject;
+        }
+        if (other.gameObject.tag == "End")
+        {
+            EditorSceneManager.LoadScene(2);
         }
 
 	}

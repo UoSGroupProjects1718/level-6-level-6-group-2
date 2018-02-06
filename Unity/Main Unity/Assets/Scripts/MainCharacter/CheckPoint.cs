@@ -3,7 +3,7 @@
 public class CheckPoint : MonoBehaviour
 {
    
-    public bool Activated = false;
+    public bool ActivatedPoint = false;
 
     private Animator thisAnimator;
 
@@ -14,14 +14,14 @@ public class CheckPoint : MonoBehaviour
     public static Vector3 GetActiveCheckPointPosition()
     {
         // If player die without activate any checkpoint, we will return a default position
-        Vector3 result = new Vector3(-328.5f, 8.4f, -528.5f);
+        Vector3 result = new Vector3(83f, -33.19f, -826.1f);
 
         if (CheckPointsList != null)
         {
             foreach (GameObject cp in CheckPointsList)
             {
                 // We search the activated checkpoint to get its position
-                if (cp.GetComponent<CheckPoint>().Activated)
+                if (cp.GetComponent<CheckPoint>().ActivatedPoint)
                 {
                     result = cp.transform.position;
                     break;
@@ -32,17 +32,17 @@ public class CheckPoint : MonoBehaviour
         return result;
     }
 
-    private void ActivateCheckPoint()
+    public void ActivateCheckPoint()
     {
         // We deactive all checkpoints in the scene
         foreach (GameObject cp in CheckPointsList)
         {
-            cp.GetComponent<CheckPoint>().Activated = false;
+            cp.GetComponent<CheckPoint>().ActivatedPoint = false;
             cp.GetComponent<Animator>().SetBool("Active", false);
         }
 
         // We activated the current checkpoint
-        Activated = true;
+        ActivatedPoint = true;
         thisAnimator.SetBool("Active", true);
     }
 

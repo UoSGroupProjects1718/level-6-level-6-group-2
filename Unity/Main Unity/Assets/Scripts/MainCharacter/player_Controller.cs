@@ -198,12 +198,12 @@ public class player_Controller : MonoBehaviour
 
     public void PlayerDeath()
 	{     
-            //playerDead = true;
 
-            
-            //player_Motor2.Instance.moveVector = new Vector3(0, 0, 0);
-            player_AnimatorController.Instance.PlayerDie();
+
+        //player_AnimatorController.Instance.PlayerDie();
 		Debug.Log("player dead");
+
+        
 		playerDead = false;
         thePlayer.transform.position = CheckPoint.GetActiveCheckPointPosition();
 

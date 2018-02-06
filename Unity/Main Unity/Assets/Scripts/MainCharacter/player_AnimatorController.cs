@@ -14,11 +14,21 @@ public class player_AnimatorController : MonoBehaviour
 
 	public Animator anim;
 
-	void Awake () 
+    public CheckPoint Reference;
+
+    void Awake () 
 	{
-		Instance = this;
+        Reference = GetComponent("CheckPoint") as CheckPoint;
+        Instance = this;
 		anim = GetComponent<Animator> ();
 	}
+
+    void Start()
+    {
+       
+
+
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -30,10 +40,14 @@ public class player_AnimatorController : MonoBehaviour
 
 	public void PlayerDie()
 	{
-		
-		anim.SetTrigger("isDying");
-
-		//anim.SetBool ("isDead", true);
+        if (Reference.ActivatedPoint)
+        {
+            anim.SetTrigger("Idle");
+        }
+        else
+        {
+            anim.SetTrigger("isDying");
+        }
 	}
 
 	public void PlayerAttack()

@@ -13,6 +13,8 @@ public class ObjectRotator : MonoBehaviour
     public float sphereRadius = 3.0f;
     public float maxCastDist = 5.0f;
 
+   
+
     void Start()
 {
     _sensitivity = 0.4f;
@@ -76,9 +78,13 @@ void Update()
             // store mouse
             _mouseReference = Input.mousePosition;
 
+            
+
         }
     }
-void OnMouseDown()
+
+
+    void OnMouseDown()
 {
         if (_canRotate == true)
         {

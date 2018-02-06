@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class KeyGui : MonoBehaviour {
 
-    public Text PressE;
+    public GameObject PressE;
 
     void Awake()
     {
 
-        PressE.enabled = false;
+        // PressE.enabled = false;
+        PressE.SetActive(false);
 
     }
 
@@ -24,7 +25,9 @@ public class KeyGui : MonoBehaviour {
     {
         if (KeyGUI.gameObject.tag == "Player")
         {
-            PressE.enabled = true;
+            
+            //PressE.enabled = true;
+            PressE.SetActive(true);
         }
     }
 
@@ -32,7 +35,8 @@ public class KeyGui : MonoBehaviour {
     {
         if(KeyGUI.gameObject.tag == "Player")
         {
-            PressE.enabled = false;
+            //PressE.enabled = false;
+            PressE.SetActive(false);
         }
     }
 

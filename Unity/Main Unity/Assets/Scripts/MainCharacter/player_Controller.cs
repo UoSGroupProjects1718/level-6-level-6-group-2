@@ -131,7 +131,7 @@ public class player_Controller : MonoBehaviour
 
                 if (canBurnObj)
                 {
-                    player_AnimatorController.Instance.PlayerBurn();
+                    
                     lantern.color = Color.red;
                     lerpCol = lantern.color;
 
@@ -153,11 +153,11 @@ public class player_Controller : MonoBehaviour
 	{
 		if (fuelSlider.fuelSlider.value >= 0 && canBurnObj == true)
 		{
-            
+            player_AnimatorController.Instance.PlayerBurn();
             burnObj.transform.GetChild(0).gameObject.SetActive(true);
             fuelSlider.fuelDecrease = 3;
             fuelSlider.RemoveFuel();
-
+            
             if (burnObj.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().isEmitting == false)
             {
 

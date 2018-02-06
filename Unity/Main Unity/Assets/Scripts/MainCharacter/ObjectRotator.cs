@@ -57,9 +57,7 @@ void Update()
         if (Physics.SphereCast(origin, sphereRadius, direction, out hitInfo, maxCastDist))
         {
             _canRotate = true;
-            Debug.Log("Rotate!!!!!!!!!!!");
-			Debug.Log (_canRotate);
-			Debug.Log (hitInfo);
+
         }
         else
         {

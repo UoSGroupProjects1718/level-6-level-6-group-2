@@ -6,15 +6,29 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Camera
+    100004: Camera.001
+    100006: Camera.002
+    100008: Camera.003
+    100010: fire_level
     400000: //RootNode
+    400002: Camera
+    400004: Camera.001
+    400006: Camera.002
+    400008: Camera.003
+    400010: fire_level
     2300000: //RootNode
+    2300002: fire_level
     3300000: //RootNode
+    3300002: fire_level
     4300000: Plane
+    4300002: fire_level
     6400000: //RootNode
+    6400002: fire_level
     7400000: Default Take
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -37,11 +51,11 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 100
+    globalScale: 2
     meshCompression: 0
     addColliders: 1
     importBlendShapes: 1
-    swapUVChannels: 0
+    swapUVChannels: 1
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1

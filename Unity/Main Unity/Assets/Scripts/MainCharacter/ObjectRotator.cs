@@ -69,9 +69,9 @@ void Update()
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1) && _canRotate == true)
+        if (Input.GetMouseButtonDown(1))
         {
-
+            Debug.Log("onmouseover");
             // rotating mirrord
             _isRotating = true;
 
@@ -86,15 +86,15 @@ void Update()
 
     void OnMouseDown()
 {
-        if (_canRotate == true)
-        {
+
+
             Debug.Log("rotating");
             // rotating mirror
             _isRotating = true;
 
             // store mouse
             _mouseReference = Input.mousePosition;
-        }
+        
 
 }
 

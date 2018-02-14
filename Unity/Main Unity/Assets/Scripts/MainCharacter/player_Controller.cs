@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
+
 
 
 public class player_Controller : MonoBehaviour 
@@ -226,9 +227,10 @@ public class player_Controller : MonoBehaviour
             canLightObj = true;
             lightObj = other.gameObject;
         }
-        if (other.gameObject.tag == "End")
+        if (other.gameObject.tag == "Finish")
         {
-            EditorSceneManager.LoadScene(2);
+            Debug.Log("finish");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
 	}

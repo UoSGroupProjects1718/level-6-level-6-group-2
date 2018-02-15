@@ -45,6 +45,9 @@ public class player_Controller : MonoBehaviour
     //level switch once finished area
     public int currentLevel;
 
+    //collecting feathers to open gate to get to puzzle
+    public GateManager gateManager;
+
 
 	// Use this for initialization
 	void Awake () 
@@ -54,6 +57,7 @@ public class player_Controller : MonoBehaviour
 		fuelSlider = GetComponent<FuelLevel>();
 		lantern = lantern.GetComponent<Light> ();
 		lerpValue = 0f;
+       
 
 	}
 
@@ -227,6 +231,26 @@ public class player_Controller : MonoBehaviour
             canLightObj = true;
             lightObj = other.gameObject;
         }
+        if (other.gameObject.tag == "Collectable")
+        {
+            if (other.name == "red")
+            {
+                gateManager.redCollected += 1;
+                other.gameObject.SetActive(false);
+            }
+            if (other.name == "blue")
+            {
+                gateManager.blueCollected += 1;
+                other.gameObject.SetActive(false);
+            }
+            if (other.name == "green")
+            {
+                gateManager.greenCollected += 1;
+                other.gameObject.SetActive(false);
+            }
+        }
+
+
         if (other.gameObject.tag == "Finish")
         {
             Debug.Log("finish");

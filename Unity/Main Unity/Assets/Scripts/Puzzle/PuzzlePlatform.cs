@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Utility;
 
 public class PuzzlePlatform : MonoBehaviour {
 
@@ -11,6 +12,8 @@ public class PuzzlePlatform : MonoBehaviour {
     Light lights;
 
     public laser lInstance;
+
+   
 
     private void Start()
     {
@@ -38,6 +41,7 @@ public class PuzzlePlatform : MonoBehaviour {
         {
             Debug.Log("Hit");
             lInstance.StartL();
+            other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseLook>().SetCursorLock(false);
         }
     }
 
@@ -46,6 +50,7 @@ public class PuzzlePlatform : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Stop");
+            other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseLook>().SetCursorLock(true);
             lInstance.Stopl();
         }
     }

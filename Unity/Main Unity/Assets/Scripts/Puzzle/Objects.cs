@@ -16,7 +16,13 @@ public class Objects : MonoBehaviour {
 
     //door object
     public GameObject gate;
+	public GameObject player;
  
+	void Start()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
     public void hitTarget(bool didHit)
     {
         if (didHit)
@@ -27,7 +33,7 @@ public class Objects : MonoBehaviour {
 			lightOne.gameObject.SetActive (true);
 			lightTwo = light2.gameObject.transform.GetChild (0);
 			lightTwo.gameObject.SetActive (true);
-
+			player.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
             exitReached = true;
             StartCoroutine(Block());
         }

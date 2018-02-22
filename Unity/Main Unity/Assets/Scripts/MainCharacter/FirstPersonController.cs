@@ -17,9 +17,15 @@ public class FirstPersonController : MonoBehaviour {
 
 	public Camera firstPersonCamera;
 	public Camera overHeadCamera;
-	
-	// Use this for initialization
-	void Start () {
+
+    public bool lockCursor = true;
+
+
+
+    private bool m_cursorIsLocked = true;
+
+    // Use this for initialization
+    void Start () {
 		firstPersonCamera.enabled = true;
 		overHeadCamera.enabled = false;
 		Screen.lockCursor = true;
@@ -29,8 +35,8 @@ public class FirstPersonController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Rotation
-		if(	firstPersonCamera.enabled == true)
-		{
+		if(firstPersonCamera.enabled == true)
+	{
 			float rotLeftRight = Input.GetAxis("Mouse X") * mouseSensitivity;
 			transform.Rotate(0, rotLeftRight, 0);
 
@@ -47,7 +53,7 @@ public class FirstPersonController : MonoBehaviour {
 
 			verticalVelocity += Physics.gravity.y * Time.deltaTime;
 
-			if( characterController.isGrounded && Input.GetButton("Jump") ) {
+			if(characterController.isGrounded && Input.GetButton("Jump") ) {
 				verticalVelocity = jumpSpeed;
 			}
 
@@ -57,13 +63,62 @@ public class FirstPersonController : MonoBehaviour {
 
 
 			characterController.Move( speed * Time.deltaTime );
-
+            
 
 		}
 
 	}
+    public void SetCursorLock(bool value)
+    {
+        lockCursor = value;
+      //  if (!lockCursor)
+       // {//we force unlock the cursor if the user disable the cursor locking helper
+      //      Cursor.lockState = CursorLockMode.Confined;
+      //      Cursor.visible = true;
+      //  }
 
-	public void ShowOverHeadCamera() // need a transition for the camera switch
+        if (lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            mouseSensitivity = 5;
+            Cursor.visible = false;
+        }
+        else if (!lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            mouseSensitivity = 8;
+            Cursor.visible = true;
+        }
+
+
+    }
+
+
+
+    private void InternalLockUpdate()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            m_cursorIsLocked = false;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            // m_cursorIsLocked = true;
+        }
+
+        if (m_cursorIsLocked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else if (!m_cursorIsLocked)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
+    }
+
+    public void ShowOverHeadCamera() // need a transition for the camera switch
 	{
 		Screen.lockCursor = false;
 		firstPersonCamera.enabled = false;

@@ -16,6 +16,7 @@ public class PuzzlePlatform : MonoBehaviour {
 	public Camera thisOverHeadCamera;
 
 	public int cameraNum;
+    public GameObject playercontroller;
 
     private void Start()
     {
@@ -43,12 +44,15 @@ public class PuzzlePlatform : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Hit");
-		other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = thisOverHeadCamera;
-			other.gameObject.GetComponent<FirstPersonController>().ShowOverHeadCamera();
+            //other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = thisOverHeadCamera;
+            //other.gameObject.GetComponent<FirstPersonController>().ShowOverHeadCamera();
 
+            other.gameObject.GetComponent<FirstPersonController>().SetCursorLock(false);
+            //other.gameObject.GetComponent<MouseLook>().m_cursorIsLocked = false;
+            // Cursor.visible = true;
+            // Cursor.lockState = CursorLockMode.Confined;
 
-			//other.gameObject.GetComponent<MouseLook>.m_cursorIsLocked = false;
-			//other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseLook>().SetCursorLock(false);
+            //other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseLook>().SetCursorLock(false);
             lInstance.StartL();
 
         }
@@ -59,10 +63,13 @@ public class PuzzlePlatform : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Stop");
-			other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = null;
-			other.gameObject.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
-			//mouseLook.m_cursorIsLocked = true;
-           // other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseLook>().SetCursorLock(true);
+            other.gameObject.GetComponent<FirstPersonController>().SetCursorLock(true);
+            //Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
+            //other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = null;
+            //other.gameObject.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
+            //mouseLook.m_cursorIsLocked = true;
+            // other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseLook>().SetCursorLock(true);
             lInstance.Stopl();
         }
     }

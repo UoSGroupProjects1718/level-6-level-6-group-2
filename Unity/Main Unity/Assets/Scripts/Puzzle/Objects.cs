@@ -5,7 +5,8 @@ using UnityEngine;
 public class Objects : MonoBehaviour {
     public GameObject exitNode;
     public bool exitReached = false;
-    public GameObject destroyed; 
+    public GameObject destroyed;
+    
     public Transform blockade;
    
     //to turn the lights on when completed puzzle

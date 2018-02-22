@@ -60,7 +60,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             lockCursor = value;
             if(!lockCursor)
             {//we force unlock the cursor if the user disable the cursor locking helper
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
         }
@@ -80,7 +80,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else if(Input.GetMouseButtonUp(0))
             {
-                m_cursorIsLocked = true;
+               // m_cursorIsLocked = true;
             }
 
             if (m_cursorIsLocked)
@@ -90,7 +90,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else if (!m_cursorIsLocked)
             {
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
         }

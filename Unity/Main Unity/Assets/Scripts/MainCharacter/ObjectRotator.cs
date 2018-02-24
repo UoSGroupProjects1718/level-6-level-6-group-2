@@ -17,6 +17,7 @@ public class ObjectRotator : MonoBehaviour
 
     void Start()
 {
+        
     _sensitivity = 0.4f;
     _rotation = Vector3.zero;
 }
@@ -72,6 +73,7 @@ void Update()
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("onmouseover");
+            
             // rotating mirrord
             _isRotating = true;
 
@@ -81,6 +83,7 @@ void Update()
             
 
         }
+        
     }
 
 
@@ -89,8 +92,9 @@ void Update()
 
 
             Debug.Log("rotating");
-            // rotating mirror
-            _isRotating = true;
+        
+        // rotating mirror
+        _isRotating = true;
 
             // store mouse
             _mouseReference = Input.mousePosition;
@@ -100,8 +104,9 @@ void Update()
 
 void OnMouseUp()
 {
-    // rotating mirror
-    _isRotating = false;
+        
+        // rotating mirror
+        _isRotating = false;
 }
 
 }

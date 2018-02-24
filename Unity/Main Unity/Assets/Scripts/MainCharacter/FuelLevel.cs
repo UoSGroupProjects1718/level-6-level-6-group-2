@@ -22,6 +22,7 @@ public class FuelLevel : MonoBehaviour {
 
     public bool playerDead = false;
 
+    public GameObject PressE;
 
     //Light object
     public Light lantern;
@@ -49,7 +50,7 @@ public class FuelLevel : MonoBehaviour {
     void Start () {
         lantern = lantern.GetComponent<Light>();
          gateManager.GetComponent<GateManager>();
-       
+        PressE.SetActive(false);
         lantern.intensity = 3f;
 	}
 
@@ -96,6 +97,7 @@ public class FuelLevel : MonoBehaviour {
 
     public void BurnObject()
     {
+        PressE.SetActive(false);
         if (fuelSlider.value >= 0 && canBurnObj == true)
         {
 
@@ -118,11 +120,13 @@ public class FuelLevel : MonoBehaviour {
             Debug.Log("Not enough Light to push objects.");
             return;
         }
+        
 
     }
 
     public void LightObject()
     {
+        PressE.SetActive(false);
         if (fuelSlider.value >= 0 && canLightObj == true)
         {
             lightObj.transform.GetChild(0).gameObject.SetActive(true);
@@ -137,6 +141,7 @@ public class FuelLevel : MonoBehaviour {
             Debug.Log("Not enough Light to push objects.");
             return;
         }
+        
     }
 
 
@@ -175,7 +180,7 @@ public class FuelLevel : MonoBehaviour {
 
         if (other.gameObject.tag == "burnable")
         {
-
+            PressE.SetActive(true);
             burnObj = other.gameObject;
 
             canBurnObj = true;
@@ -183,6 +188,7 @@ public class FuelLevel : MonoBehaviour {
 
         if (other.gameObject.tag == "playerLight")
         {
+            PressE.SetActive(true);
             canLightObj = true;
             lightObj = other.gameObject;
         }
@@ -221,6 +227,7 @@ public class FuelLevel : MonoBehaviour {
 
         if (other.gameObject.tag == "burnable")
         {
+            PressE.SetActive(false);
             burnObj = null;
             canBurnObj = false;
 
@@ -228,6 +235,7 @@ public class FuelLevel : MonoBehaviour {
 
         if (other.gameObject.tag == "playerLight")
         {
+            PressE.SetActive(false);
             lightObj = null;
             canLightObj = false;
         }

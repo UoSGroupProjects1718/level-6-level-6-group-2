@@ -18,9 +18,11 @@ public class PuzzlePlatform : MonoBehaviour {
 	public int cameraNum;
     public GameObject playercontroller;
 
+    public GameObject lmbObject;
+
     private void Start()
     {
-		
+        lmbObject.SetActive(false);
         lights = gameObject.transform.GetChild(0).GetComponent<Light>();
     }
     private void Update()
@@ -46,7 +48,7 @@ public class PuzzlePlatform : MonoBehaviour {
             Debug.Log("Hit");
             //other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = thisOverHeadCamera;
             //other.gameObject.GetComponent<FirstPersonController>().ShowOverHeadCamera();
-
+            lmbObject.SetActive(true);
             other.gameObject.GetComponent<FirstPersonController>().SetCursorLock(false);
             //other.gameObject.GetComponent<MouseLook>().m_cursorIsLocked = false;
             // Cursor.visible = true;
@@ -63,6 +65,7 @@ public class PuzzlePlatform : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Stop");
+            lmbObject.SetActive(false);
             other.gameObject.GetComponent<FirstPersonController>().SetCursorLock(true);
             //Cursor.visible = false;
             //Cursor.lockState = CursorLockMode.Locked;

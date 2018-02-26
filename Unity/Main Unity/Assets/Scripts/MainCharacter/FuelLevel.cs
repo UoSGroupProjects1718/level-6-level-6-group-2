@@ -45,13 +45,22 @@ public class FuelLevel : MonoBehaviour {
 
     //collecting feathers to open gate to get to puzzle
     public GateManager gateManager;
+    AudioSource audios;
+    public AudioClip pickupAudio;
+    public AudioClip burnAudio;
+    public AudioClip lightAudio;
+    public AudioClip failLightAudio;
+    
 
     // Use this for initialization
     void Start () {
         lantern = lantern.GetComponent<Light>();
+        audios = GetComponent<AudioSource>();
          gateManager.GetComponent<GateManager>();
         PressE.SetActive(false);
-        lantern.intensity = 3f;
+        lantern.intensity = 8;
+        fuelSlider.value = 8;
+        maxFuel = 10;
 	}
 
 	// Update is called once per frame
@@ -71,17 +80,17 @@ public class FuelLevel : MonoBehaviour {
                 LightObject();
             }
 
-
         }
 
         if (fuelSlider.value >= 0)
         {
-           // fuelSlider.value -= Time.deltaTime / fuelFallRate;
+           // fuelSlider.value -= Time.time / fuelFallRate;
         }
         if (fuelSlider.value <= 0)
         {                
             fuelSlider.value = 0;
 			playerDead = true;
+            PlayerDeath();
 			//need to put respawn stuff here
 			//but for the moment I'm just setting the fuel slider back to full
 			//sorry lewis, dont hurt me. :P
@@ -102,22 +111,20 @@ public class FuelLevel : MonoBehaviour {
         {
 
             burnObj.transform.GetChild(0).gameObject.SetActive(true);
-            fuelDecrease = 3;
+            fuelDecrease = 1;
             RemoveFuel();
-
-            if (burnObj.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().isEmitting == false)
-            {
-
-            }
-            burnObj.SetActive(false);
             canBurnObj = false;
-
+            burnObj.SetActive(false);
+            audios.clip = burnAudio;
+            audios.Play();
         }
 
 
         if (fuelSlider.value <= 0)
         {
-            Debug.Log("Not enough Light to push objects.");
+            Debug.Log("Not enough Light to burn objects.");
+            audios.clip = failLightAudio;
+            audios.Play();
             return;
         }
         
@@ -132,13 +139,20 @@ public class FuelLevel : MonoBehaviour {
             lightObj.transform.GetChild(0).gameObject.SetActive(true);
             fuelDecrease = 5;
             RemoveFuel();
+            audios.clip = lightAudio;
+            audios.Play();
+            audios.clip = null;
             canLightObj = false;
         }
 
 
         if (fuelSlider.value <= 0)
         {
-            Debug.Log("Not enough Light to push objects.");
+            Debug.Log("Not enough Light to light objects.");
+            audios.clip = failLightAudio;
+            audios.Play();
+
+            audios.clip = null;
             return;
         }
         
@@ -151,6 +165,7 @@ public class FuelLevel : MonoBehaviour {
     {
         fuelSlider.value = fuelSlider.value - fuelDecrease;
         fuelDecrease = 0;
+
     }
 
     public void PlayerDeath()
@@ -195,6 +210,9 @@ public class FuelLevel : MonoBehaviour {
 
         if (other.gameObject.tag == "Collectable")
         {
+            audios.clip = pickupAudio;
+            audios.Play();
+            audios.clip = null;
             if (other.name == "red")
             {
                 Debug.Log("red");

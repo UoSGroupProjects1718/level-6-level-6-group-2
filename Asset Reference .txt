@@ -1,2 +1,6 @@
 Asset Reference 
 TextMesh Pro from Unity Store
+
+
+Sounds/Music
+Freesound. (2014). Computer Hum.mp3 by bmusic92. [online] Available at: https://freesound.org/people/bmusic92/sounds/232935/ [Accessed 26 Feb. 2018].

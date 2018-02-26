@@ -14,13 +14,23 @@ public class Objects : MonoBehaviour {
 	public Transform lightTwo;
     public GameObject light1;
 	public GameObject light2;
+    public Light roomLight;
+    public Light roomLight2;
+    public Light roomLight3;
+    public Light roomLight4;
 
     //door object
     public GameObject gate;
 	public GameObject player;
- 
-	void Start()
+
+
+    public AudioSource puzzleComplete;
+    public AudioClip machinery;
+    public AudioClip puzzleCompleteAudio;
+
+    void Start()
 	{
+        puzzleComplete = GetComponent<AudioSource>();
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
@@ -28,21 +38,40 @@ public class Objects : MonoBehaviour {
     {
         if (didHit)
         {
-			//get the child object of the brazier
-			lightOne = light1.gameObject.transform.GetChild (0);
+            puzzleComplete.Stop();
+            puzzleComplete.clip = puzzleCompleteAudio;
+            puzzleComplete.Play();
+            //get the child object of the brazier
+            lightOne = light1.gameObject.transform.GetChild (0);
 			//enable it to turn the fire on
 			lightOne.gameObject.SetActive (true);
 			lightTwo = light2.gameObject.transform.GetChild (0);
 			lightTwo.gameObject.SetActive (true);
-			player.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
+            //making the lights in the room brighter, and a yellow colour to show something has changed.
+            roomLight.intensity += 2;
+            roomLight.color = Color.white;
+            roomLight2.intensity += 2;
+            roomLight2.color = Color.white;
+            roomLight3.intensity += 2;
+            roomLight3.color = Color.white;
+            roomLight4.intensity += 2;
+            roomLight4.color = Color.white;
+
+            player.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
             exitReached = true;
+
+
+            
             StartCoroutine(Block());
         }
     }
     IEnumerator Block()
     {
-       // Instantiate(destroyed, blockade.position, blockade.rotation);
-       // Destroy(exitNode);
+        // Instantiate(destroyed, blockade.position, blockade.rotation);
+        // Destroy(exitNode);
+        puzzleComplete.clip = machinery;
+        puzzleComplete.Play();
+        puzzleComplete.loop = true;
         destroyed.gameObject.SetActive(false);
         gate.gameObject.SetActive(false);
         yield return null;

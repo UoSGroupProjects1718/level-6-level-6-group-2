@@ -21,6 +21,7 @@ public class laser : MonoBehaviour
     private LineRenderer lLineRenderer;
     public PuzzleManager puzzleM;
 
+
     // Use this for initialization
     void Start()
     {

@@ -23,6 +23,7 @@ public class PuzzlePlatform : MonoBehaviour {
     private void Start()
     {
         lmbObject.SetActive(false);
+        thisOverHeadCamera.gameObject.SetActive(false);
         lights = gameObject.transform.GetChild(0).GetComponent<Light>();
     }
     private void Update()
@@ -46,8 +47,9 @@ public class PuzzlePlatform : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Hit");
-            //other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = thisOverHeadCamera;
-            //other.gameObject.GetComponent<FirstPersonController>().ShowOverHeadCamera();
+            other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = thisOverHeadCamera;
+            thisOverHeadCamera.gameObject.SetActive(true);
+            other.gameObject.GetComponent<FirstPersonController>().ShowOverHeadCamera();
             lmbObject.SetActive(true);
             other.gameObject.GetComponent<FirstPersonController>().SetCursorLock(false);
             //other.gameObject.GetComponent<MouseLook>().m_cursorIsLocked = false;
@@ -66,11 +68,12 @@ public class PuzzlePlatform : MonoBehaviour {
         {
             Debug.Log("Stop");
             lmbObject.SetActive(false);
+            thisOverHeadCamera.gameObject.SetActive(false);
             other.gameObject.GetComponent<FirstPersonController>().SetCursorLock(true);
             //Cursor.visible = false;
             //Cursor.lockState = CursorLockMode.Locked;
-            //other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = null;
-            //other.gameObject.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
+            other.gameObject.GetComponent<FirstPersonController>().overHeadCamera = null;
+            other.gameObject.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
             //mouseLook.m_cursorIsLocked = true;
             // other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.MouseLook>().SetCursorLock(true);
             lInstance.Stopl();

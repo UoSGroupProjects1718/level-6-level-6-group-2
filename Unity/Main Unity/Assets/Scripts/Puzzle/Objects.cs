@@ -47,15 +47,6 @@ public class Objects : MonoBehaviour {
 			lightOne.gameObject.SetActive (true);
 			lightTwo = light2.gameObject.transform.GetChild (0);
 			lightTwo.gameObject.SetActive (true);
-            //making the lights in the room brighter, and a yellow colour to show something has changed.
-            roomLight.intensity += 2;
-            roomLight.color = Color.white;
-            roomLight2.intensity += 2;
-            roomLight2.color = Color.white;
-            roomLight3.intensity += 2;
-            roomLight3.color = Color.white;
-            roomLight4.intensity += 2;
-            roomLight4.color = Color.white;
 
             player.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
             exitReached = true;

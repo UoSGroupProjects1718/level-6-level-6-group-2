@@ -34,6 +34,10 @@ public class FuelLevel : MonoBehaviour {
     bool canBurnObj = false;
     ParticleSystem burnparticle;
 
+    //dissapear shader
+    public Renderer rend;
+    private IEnumerator coroutine;
+
     //light object
     bool canLightObj = false;
     GameObject lightObj;
@@ -54,6 +58,7 @@ public class FuelLevel : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
         lantern = lantern.GetComponent<Light>();
         audios = GetComponent<AudioSource>();
          gateManager.GetComponent<GateManager>();
@@ -71,8 +76,10 @@ public class FuelLevel : MonoBehaviour {
 
             if (canBurnObj)
             {
+                //dissolving the object
+                coroutine = BurnStuff();
+                StartCoroutine(coroutine);
 
-                BurnObject();
             }
 
             if (canLightObj)
@@ -110,6 +117,8 @@ public class FuelLevel : MonoBehaviour {
         if (fuelSlider.value >= 0 && canBurnObj == true)
         {
 
+
+            Debug.Log("burning");
             burnObj.transform.GetChild(0).gameObject.SetActive(true);
             fuelDecrease = 1;
             RemoveFuel();
@@ -158,7 +167,20 @@ public class FuelLevel : MonoBehaviour {
         
     }
 
+    private IEnumerator BurnStuff()
+    {
+        rend = burnObj.GetComponent<Renderer>();
+       
+        rend.material.SetFloat("_Progress", 0.8f);
+        yield return new WaitForSeconds(1);
+        rend.material.SetFloat("_Progress", 0.6f);
+        yield return new WaitForSeconds(1);
+        rend.material.SetFloat("_Progress", 0.4f);
+        yield return new WaitForSeconds(1);
+        rend.material.SetFloat("_Progress", 0.2f);
 
+        BurnObject();
+    }
 
 
     public void RemoveFuel()

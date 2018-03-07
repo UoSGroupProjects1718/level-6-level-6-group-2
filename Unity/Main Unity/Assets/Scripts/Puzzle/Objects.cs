@@ -48,7 +48,7 @@ public class Objects : MonoBehaviour {
 			lightTwo = light2.gameObject.transform.GetChild (0);
 			lightTwo.gameObject.SetActive (true);
 
-            player.GetComponent<FirstPersonController>().ShowFirstPersonCamera();
+
             exitReached = true;
 
 
@@ -59,12 +59,13 @@ public class Objects : MonoBehaviour {
     IEnumerator Block()
     {
         // Instantiate(destroyed, blockade.position, blockade.rotation);
-        // Destroy(exitNode);
-        puzzleComplete.clip = machinery;
-        puzzleComplete.Play();
-        puzzleComplete.loop = true;
+        //Destroy(exitNode);
         destroyed.gameObject.SetActive(false);
         gate.gameObject.SetActive(false);
+      //  puzzleComplete.clip = machinery;
+       // puzzleComplete.Play();
+
+
         yield return null;
     }
 

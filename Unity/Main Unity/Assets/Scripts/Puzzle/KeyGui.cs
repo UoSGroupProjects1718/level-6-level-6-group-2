@@ -11,7 +11,7 @@ public class KeyGui : MonoBehaviour {
     {
 
         // PressE.enabled = false;
-        PressE.SetActive(false);
+        //PressE.SetActive(false);
 
     }
 

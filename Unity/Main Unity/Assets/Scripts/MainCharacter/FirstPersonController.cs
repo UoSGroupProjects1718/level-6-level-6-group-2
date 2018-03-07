@@ -20,49 +20,92 @@ public class FirstPersonController : MonoBehaviour {
 
     public bool lockCursor = true;
 
+    public bool onPuzzle;
+
 
 
     private bool m_cursorIsLocked = true;
 
     // Use this for initialization
     void Start () {
-		firstPersonCamera.enabled = true;
-		overHeadCamera.enabled = false;
+
 		Screen.lockCursor = true;
 		characterController = GetComponent<CharacterController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// Rotation
+
+
 		if(firstPersonCamera.enabled == true)
 	{
-			float rotLeftRight = Input.GetAxis("Mouse X") * mouseSensitivity;
-			transform.Rotate(0, rotLeftRight, 0);
+
+            //if the player is not on the puzzle platform, rotate camera normally
+            if (!onPuzzle)
+            {
+
+                // Rotation
+                float rotLeftRight = Input.GetAxis("Mouse X") * mouseSensitivity;
+                transform.Rotate(0, rotLeftRight, 0);
 
 
-			verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-			verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
-			Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+                verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+                verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
+                Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+
+                // Movement
+
+                float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
+                float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
+
+                verticalVelocity += Physics.gravity.y * Time.deltaTime;
+
+                if (characterController.isGrounded && Input.GetButton("Jump"))
+                {
+                    verticalVelocity = jumpSpeed;
+                }
+
+                Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
+
+                speed = transform.rotation * speed;
 
 
-			// Movement
-
-			float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
-			float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
-
-			verticalVelocity += Physics.gravity.y * Time.deltaTime;
-
-			if(characterController.isGrounded && Input.GetButton("Jump") ) {
-				verticalVelocity = jumpSpeed;
-			}
-
-			Vector3 speed = new Vector3( sideSpeed, verticalVelocity, forwardSpeed );
-
-			speed = transform.rotation * speed;
+                characterController.Move(speed * Time.deltaTime);
+            }
+            if (onPuzzle && Input.GetKey(KeyCode.Mouse2))
+            {
+                // Rotation
+                float rotLeftRight = Input.GetAxis("Mouse X") * mouseSensitivity;
+                transform.Rotate(0, rotLeftRight, 0);
 
 
-			characterController.Move( speed * Time.deltaTime );
+                verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+                verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
+                Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+
+                // Movement
+
+                float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
+                float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
+
+                verticalVelocity += Physics.gravity.y * Time.deltaTime;
+
+                if (characterController.isGrounded && Input.GetButton("Jump"))
+                {
+                    verticalVelocity = jumpSpeed;
+                }
+
+                Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
+
+                speed = transform.rotation * speed;
+
+
+                characterController.Move(speed * Time.deltaTime);
+
+            }
+
+
+
             
 
 		}
@@ -118,17 +161,5 @@ public class FirstPersonController : MonoBehaviour {
         }
     }
 
-    public void ShowOverHeadCamera() // need a transition for the camera switch
-	{
-		Screen.lockCursor = false;
-		firstPersonCamera.enabled = false;
-		overHeadCamera.enabled = true;
-	}
 
-	public void ShowFirstPersonCamera()
-	{
-		Screen.lockCursor = true;
-		firstPersonCamera.enabled = true;
-		overHeadCamera.enabled = false;
-	}
 }

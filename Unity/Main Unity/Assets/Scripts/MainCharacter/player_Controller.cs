@@ -233,21 +233,7 @@ public class player_Controller : MonoBehaviour
         }
         if (other.gameObject.tag == "Collectable")
         {
-            if (other.name == "red")
-            {
-                gateManager.redCollected += 1;
-                other.gameObject.SetActive(false);
-            }
-            if (other.name == "blue")
-            {
-                gateManager.blueCollected += 1;
-                other.gameObject.SetActive(false);
-            }
-            if (other.name == "green")
-            {
-                gateManager.greenCollected += 1;
-                other.gameObject.SetActive(false);
-            }
+
         }
 
 

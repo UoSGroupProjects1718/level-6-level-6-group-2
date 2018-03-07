@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour {
     public Transform inventory;
     public Transform pauseM;
 
+    public GameObject PlayerCharacter;
+
     public static bool IsPaused = false;
 
     private void Awake()
@@ -20,9 +22,14 @@ public class UIManager : MonoBehaviour {
         pauseM = canvas.Find("PauseMenu");
     }
 
-	
-	// Update is called once per frame
-	void Update () {
+    private void Start()
+    {
+
+    }
+
+
+    // Update is called once per frame
+    void Update () {
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
@@ -75,4 +82,7 @@ public class UIManager : MonoBehaviour {
     {
         inventory.gameObject.SetActive(!inventory.gameObject.activeInHierarchy);
     }
+
+
+
 }

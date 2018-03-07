@@ -1,40 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GateManager : MonoBehaviour {
 
-    public GameObject[] redGates;
-    public GameObject[] blueGates;
-    public GameObject[] greenGates;
+   // public GameObject[] redGates;
+   // public GameObject[] blueGates;
+  //  public GameObject[] greenGates;
 
-    public bool redOpen;
-    public bool blueOpen;
-    public bool greenOpen;
+    //public bool redOpen;
+    //public bool blueOpen;
+    //public bool greenOpen;
 
-    public int redCollected;
-    public int blueCollected;
-    public int greenCollected;
+    //public int redCollected;
+    //public int blueCollected;
+    //public int greenCollected;
+
+    public Text scoreText;
+    public int featherNumberCount;
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start() {
 
-        if (redCollected >= 3)        
+        featherNumberCount = 0;
+        UpdateScore();
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+        /*
+        if (redCollected >= 3)
             redOpen = true;
-        
+
 
         if (blueCollected >= 3)
             blueOpen = true;
 
 
-        if (greenCollected >= 3)        
+        if (greenCollected >= 3)
             greenOpen = true;
-        
+
 
         if (redOpen)
         {
@@ -59,6 +66,14 @@ public class GateManager : MonoBehaviour {
                 greenGates[i].SetActive(false);
             }
         }
+        */
+    }
+
+
+     public void UpdateScore()
+    {
+
+        scoreText.text = featherNumberCount.ToString();
 
     }
 }

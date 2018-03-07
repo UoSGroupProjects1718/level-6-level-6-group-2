@@ -245,14 +245,13 @@ public class FuelLevel : MonoBehaviour {
         {
             audios.clip = pickupAudio;
             audios.Play();
-            audios.clip = null;
-            if (other.name == "red")
-            {
-                Debug.Log("red");
-                gateManager.redCollected += 1;
-                other.gameObject.SetActive(false);
-            }
-            if (other.name == "blue")
+            audios.clip = null;                   
+            Debug.Log("feather Collected");
+            gateManager.featherNumberCount += 1;
+            gateManager.UpdateScore();
+            other.gameObject.SetActive(false);
+            
+            /*if (other.name == "blue")
             {
                 gateManager.blueCollected += 1;
                 other.gameObject.SetActive(false);
@@ -262,6 +261,7 @@ public class FuelLevel : MonoBehaviour {
                 gateManager.greenCollected += 1;
                 other.gameObject.SetActive(false);
             }
+            */
         }
 
 

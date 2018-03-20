@@ -31,6 +31,7 @@ public class Objects : MonoBehaviour {
     void Start()
 	{
         puzzleComplete = GetComponent<AudioSource>();
+    
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
@@ -42,11 +43,12 @@ public class Objects : MonoBehaviour {
             puzzleComplete.clip = puzzleCompleteAudio;
             puzzleComplete.Play();
             //get the child object of the brazier
-            lightOne = light1.gameObject.transform.GetChild (0);
+           // light1.gameObject.transform.GetChild (0).gameObject.SetActive(true);
+            lightOne.gameObject.transform.GetChild(0).gameObject.SetActive(true);
 			//enable it to turn the fire on
-			lightOne.gameObject.SetActive (true);
-			lightTwo = light2.gameObject.transform.GetChild (0);
-			lightTwo.gameObject.SetActive (true);
+			//lightOne.gameObject.SetActive (true);
+			lightTwo.gameObject.transform.GetChild (0).gameObject.SetActive(true);
+			//lightTwo.gameObject.SetActive (true);
 
 
             exitReached = true;

@@ -123,7 +123,7 @@ public class FuelLevel : MonoBehaviour {
             fuelDecrease = 1;
             RemoveFuel();
             canBurnObj = false;
-            burnObj.SetActive(false);
+            Destroy(burnObj);
             audios.clip = burnAudio;
             audios.Play();
         }
@@ -172,21 +172,21 @@ public class FuelLevel : MonoBehaviour {
         rend = burnObj.GetComponent<Renderer>();
        
         rend.material.SetFloat("_Progress", 0.9f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.8f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.7f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.6f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.5f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.4f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.3f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.2f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         rend.material.SetFloat("_Progress", 0.1f);
 
 

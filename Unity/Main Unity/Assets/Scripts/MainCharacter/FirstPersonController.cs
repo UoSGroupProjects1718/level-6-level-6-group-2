@@ -55,23 +55,43 @@ public class FirstPersonController : MonoBehaviour {
 
                 // Movement
 
-                float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
-                float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
+              //  float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
+              //  float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
 
-                verticalVelocity += Physics.gravity.y * Time.deltaTime;
+             //   verticalVelocity += Physics.gravity.y * Time.deltaTime;
 
-                if (characterController.isGrounded && Input.GetButton("Jump"))
-                {
-                    verticalVelocity = jumpSpeed;
-                }
+             //   if (characterController.isGrounded && Input.GetButton("Jump"))
+             //   {
+              //      verticalVelocity = jumpSpeed;
+             //   }
 
-                Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
+             //   Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
 
-                speed = transform.rotation * speed;
+             //   speed = transform.rotation * speed;
 
 
-                characterController.Move(speed * Time.deltaTime);
+             //   characterController.Move(speed * Time.deltaTime);
             }
+            // Movement
+
+            float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
+            float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
+
+            verticalVelocity += Physics.gravity.y * Time.deltaTime;
+
+            if (characterController.isGrounded && Input.GetButton("Jump"))
+            {
+                verticalVelocity = jumpSpeed;
+            }
+
+            Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
+
+            speed = transform.rotation * speed;
+
+
+            characterController.Move(speed * Time.deltaTime);
+
+
             if (onPuzzle && Input.GetKey(KeyCode.Mouse2))
             {
                 // Rotation
@@ -85,22 +105,22 @@ public class FirstPersonController : MonoBehaviour {
 
                 // Movement
 
-                float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
-                float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
+              //  float forwardSpeed = Input.GetAxis("Vertical") * movementSpeed;
+              //  float sideSpeed = Input.GetAxis("Horizontal") * movementSpeed;
 
-                verticalVelocity += Physics.gravity.y * Time.deltaTime;
+              //  verticalVelocity += Physics.gravity.y * Time.deltaTime;
 
-                if (characterController.isGrounded && Input.GetButton("Jump"))
-                {
-                    verticalVelocity = jumpSpeed;
-                }
+              //  if (characterController.isGrounded && Input.GetButton("Jump"))
+              //  {
+              //      verticalVelocity = jumpSpeed;
+             //   }
 
-                Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
+             //   Vector3 speed = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
 
-                speed = transform.rotation * speed;
+             //   speed = transform.rotation * speed;
 
 
-                characterController.Move(speed * Time.deltaTime);
+              //  characterController.Move(speed * Time.deltaTime);
 
             }
 

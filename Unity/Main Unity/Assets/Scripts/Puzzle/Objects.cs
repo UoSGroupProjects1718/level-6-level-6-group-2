@@ -14,10 +14,7 @@ public class Objects : MonoBehaviour {
 	public Transform lightTwo;
     public GameObject light1;
 	public GameObject light2;
-    public Light roomLight;
-    public Light roomLight2;
-    public Light roomLight3;
-    public Light roomLight4;
+
 
     //door object
     public GameObject gate;
@@ -46,9 +43,9 @@ public class Objects : MonoBehaviour {
            // light1.gameObject.transform.GetChild (0).gameObject.SetActive(true);
             lightOne.gameObject.transform.GetChild(0).gameObject.SetActive(true);
 			//enable it to turn the fire on
-			//lightOne.gameObject.SetActive (true);
+			lightOne.gameObject.SetActive (true);
 			lightTwo.gameObject.transform.GetChild (0).gameObject.SetActive(true);
-			//lightTwo.gameObject.SetActive (true);
+			lightTwo.gameObject.SetActive (true);
 
 
             exitReached = true;
@@ -64,8 +61,7 @@ public class Objects : MonoBehaviour {
         //Destroy(exitNode);
         destroyed.gameObject.SetActive(false);
         gate.gameObject.SetActive(false);
-      //  puzzleComplete.clip = machinery;
-       // puzzleComplete.Play();
+
 
 
         yield return null;

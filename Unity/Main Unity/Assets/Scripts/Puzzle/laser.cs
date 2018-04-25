@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(LineRenderer))]
-public class laser : MonoBehaviour
+public class Laser : MonoBehaviour
 {
     public float updateFreq = 0.1f;
     public int laserDist;
@@ -14,6 +14,8 @@ public class laser : MonoBehaviour
     public int mBounce;
     public int mSplit;
     private float time = 0;
+
+    public bool isCompleted;
 
     public GameObject puzzlePlatform;
     
@@ -142,16 +144,19 @@ public class laser : MonoBehaviour
                     if (hit.transform.gameObject.tag == "Target")
                     {
                         puzzleM.hitTarget(true);
+
+                        isCompleted = true;
                     }
                     else
                     {
                         puzzleM.hitTarget(false);
+                        isCompleted = false;
                     }
                 }
                 active = false;
             }
             if (reflect > mBounce)
-                active = false;
+                active = false;         
         }
         yield return new WaitForEndOfFrame();
     }

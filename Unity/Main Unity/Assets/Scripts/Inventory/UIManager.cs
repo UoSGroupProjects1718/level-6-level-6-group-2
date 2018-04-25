@@ -12,7 +12,8 @@ public class UIManager : MonoBehaviour {
     public Transform inventory;
     public Transform pauseM;
 
-    public GameObject PlayerCharacter;
+    public Laser Instance;
+    public FirstPersonController CameraControl;
 
     public static bool IsPaused = false;
 
@@ -30,10 +31,12 @@ public class UIManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        /*
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
         }
+        */
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -53,13 +56,17 @@ public class UIManager : MonoBehaviour {
         pauseM.gameObject.SetActive(false);
         Time.timeScale = 1.0f;
         IsPaused = false;
+        CameraControl.enabled = true;
+        Cursor.visible = false;
     }
 
-    void Pause ()
+    public void Pause ()
     {
         pauseM.gameObject.SetActive(true);
         Time.timeScale = 0f;
         IsPaused = true;
+        CameraControl.enabled = false;
+        Cursor.visible = true;
     }
 
     public void LoadMainMenu()
@@ -73,16 +80,12 @@ public class UIManager : MonoBehaviour {
         Application.Quit();
     }
 
-    public void Settings()
-    {
-
-    }
-
+    /*
     public void ToggleInventory()
     {
         inventory.gameObject.SetActive(!inventory.gameObject.activeInHierarchy);
     }
-
+    */
 
 
 }

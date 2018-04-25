@@ -11,7 +11,7 @@ public class PuzzlePlatform : MonoBehaviour {
     private float changeTime = 0;
     Light lights;
 
-    public laser lInstance;
+    public Laser lInstance;
 
 	public Camera thisOverHeadCamera;
 

@@ -5,9 +5,11 @@ using UnityEngine;
 public class Objects : MonoBehaviour {
     public GameObject exitNode;
     public bool exitReached = false;
-    public GameObject destroyed;
-    
-    public Transform blockade;
+
+    public GameObject featherClone;
+    public Transform rewardLocation;
+
+    public bool isSpawned;
    
     //to turn the lights on when completed puzzle
 	public Transform lightOne;
@@ -17,13 +19,21 @@ public class Objects : MonoBehaviour {
 
 
     //door object
-    public GameObject gate;
 	public GameObject player;
 
 
     public AudioSource puzzleComplete;
     public AudioClip machinery;
     public AudioClip puzzleCompleteAudio;
+
+     void Update()
+    {
+        if (!isSpawned && exitReached)
+        {
+            Instantiate(featherClone, rewardLocation.position, rewardLocation.rotation);
+            isSpawned = true;
+        }
+    }
 
     void Start()
 	{
@@ -49,22 +59,6 @@ public class Objects : MonoBehaviour {
 
 
             exitReached = true;
-
-
-            
-            StartCoroutine(Block());
         }
     }
-    IEnumerator Block()
-    {
-        // Instantiate(destroyed, blockade.position, blockade.rotation);
-        //Destroy(exitNode);
-        destroyed.gameObject.SetActive(false);
-        gate.gameObject.SetActive(false);
-
-
-
-        yield return null;
-    }
-
 }

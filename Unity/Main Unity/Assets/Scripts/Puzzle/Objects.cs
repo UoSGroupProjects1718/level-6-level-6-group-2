@@ -6,10 +6,19 @@ public class Objects : MonoBehaviour {
     public GameObject exitNode;
     public bool exitReached = false;
 
+
+    //remove darkness hazard
+    public List<GameObject> hazardObjects = new List<GameObject>();
+    public GameObject hazardObject;
+
+
+    public Transform blockade;
+
     public GameObject featherClone;
     public Transform rewardLocation;
 
     public bool isSpawned;
+
    
     //to turn the lights on when completed puzzle
 	public Transform lightOne;
@@ -61,4 +70,23 @@ public class Objects : MonoBehaviour {
             exitReached = true;
         }
     }
+
+    IEnumerator Block()
+    {
+
+        //Destroy(exitNode);
+      //  for(int i = hazardObjects.Count-1; i >= 0; i--)
+       // {
+       //     Destroy(hazardObjects[i].gameObject);
+      //  }
+        hazardObject.SetActive(false);
+
+
+
+
+
+        yield return null;
+    }
+
+
 }

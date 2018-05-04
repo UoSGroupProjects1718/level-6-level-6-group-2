@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GateManager : MonoBehaviour {
 
    // public GameObject[] redGates;
@@ -68,7 +69,17 @@ public class GateManager : MonoBehaviour {
         }
         */
     }
+    public void CheckFeatherCount()
+    {
+        if (featherNumberCount >= 0) //if greater than 0
+            scoreText.text = featherNumberCount.ToString();
 
+        if (featherNumberCount <= 0)
+        {
+            featherNumberCount = 0;
+            scoreText.text = featherNumberCount.ToString();
+        }
+    }
 
      public void UpdateScore()
     {

@@ -38,6 +38,8 @@ public class FuelLevel : MonoBehaviour {
     public Renderer rend;
     private IEnumerator coroutine;
 
+
+
     //light object
     bool canLightObj = false;
     GameObject lightObj;
@@ -216,29 +218,37 @@ public class FuelLevel : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Oil")
-        {
-            other.transform.GetChild(0).gameObject.SetActive(false);
-            other.transform.GetChild(1).gameObject.SetActive(true);
-            fuelSlider.value = maxFuel;
-			Debug.Log ("Gained Fuel");
-			//other.gameObject.SetActive (false);
-        }
+
 
 
         if (other.gameObject.tag == "burnable")
         {
             PressE.SetActive(true);
-            burnObj = other.gameObject;
+            if (gateManager.featherNumberCount > 0)
+            {
 
-            canBurnObj = true;
+                burnObj = other.gameObject;
+                gateManager.featherNumberCount -= 1;
+                gateManager.CheckFeatherCount();
+                canBurnObj = true;
+
+            }
+
         }
 
         if (other.gameObject.tag == "playerLight")
         {
             PressE.SetActive(true);
-            canLightObj = true;
-            lightObj = other.gameObject;
+            if (gateManager.featherNumberCount > 0)
+            {
+
+                canLightObj = true;
+                gateManager.featherNumberCount -= 1;
+                gateManager.CheckFeatherCount();
+
+                lightObj = other.gameObject;
+            }
+
         }
 
         if (other.gameObject.tag == "Collectable")
@@ -248,7 +258,7 @@ public class FuelLevel : MonoBehaviour {
             audios.clip = null;                   
             Debug.Log("feather Collected");
             gateManager.featherNumberCount += 1;
-            gateManager.UpdateScore();
+            gateManager.CheckFeatherCount();
             other.gameObject.SetActive(false);
             
             /*if (other.name == "blue")
@@ -263,7 +273,15 @@ public class FuelLevel : MonoBehaviour {
             }
             */
         }
-
+        if (other.gameObject.tag == "Hazard")
+        {
+            if (gateManager.featherNumberCount > 0)
+            {            
+                gateManager.featherNumberCount -= 1;
+                gateManager.CheckFeatherCount();
+                //pain sound         
+            }
+        }
 
         if (other.gameObject.tag == "Finish")
         {
